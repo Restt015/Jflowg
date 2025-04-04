@@ -9,4 +9,13 @@ Currently, two official plugins are available:
 
 ## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-ts).
+
+## Proyecto de Programacion Tienda de Ropa
+
+Este proyecto es una tienda de ropa en línea desarrollada como parte de un proyecto de programación. La tienda incluye funcionalidades como:
+
+- Catálogo de productos con imágenes y descripciones.
+- Carrito de compras y proceso de pago.
+- Gestión de usuarios y autenticación.
+- Panel de administración para gestión de inventario y pedidos.
