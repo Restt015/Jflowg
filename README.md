@@ -71,5 +71,3 @@ Hacer push significa **enviar tus cambios/añadidos** del último commit que hic
 - Dentro de tu rama (branch)
   
         $ git push origin <nombre-de-branch>
-
-## Inicializar y correr el programa
