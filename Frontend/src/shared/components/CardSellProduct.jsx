@@ -22,11 +22,11 @@ function CardSellProduct({
       )}
 
      
-      <div className="bg-pink-100 flex items-center justify-center h-[140px]">
+      <div className="bg-gray-400 flex items-center justify-center h-[140px]">
         {image ? (
           <img src={image} alt={title} className="h-[70px] object-contain" />
         ) : (
-          <span className="text-sm text-gray-400">IMAGEN DEL PRODUCTO</span>
+          <span className="text-sm">IMAGEN AQUI</span>
         )}
       </div>
 
