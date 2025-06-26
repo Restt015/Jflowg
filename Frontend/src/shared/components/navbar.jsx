@@ -6,8 +6,11 @@ function Navbar() {
 
   return (
     <>
-           
-      <nav className="rounded-b-lg shadow-md px-6 py-4 w-full">
+      <nav className="fixed top-6 left-0 w-full z-40 bg-rose-100 shadow-md px-6 py-4 rounded-b-lg">
+        <p className="fixed top-0 left-0 w-full text-sm text-white bg-gray-400 text-center py-1 z-50">
+
+        Envio gratis a todo el mundo
+      </p>
         <div className="max-w-7xl mx-auto flex justify-between items-center">  
           <div className="flex items-center space-x-2"> 
             <span className="text-gray-800 font-bold text-xl">Jflowg</span>

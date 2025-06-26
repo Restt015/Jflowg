@@ -7,14 +7,8 @@ import Footer from '../../shared/components/Footer';
 
 function Home() {
   return (
-    <div className="bg-gradient-to-b from-red-100 via-red-200 to-rose-300 min-h-screen">
-      <p className="w-full bg-gray-100 text-red-900 text-sm text-center py-2 font-serif">
-
-        Envio gratis a todo el mundo
-      </p>
-  <Navbar>
-        
-  </Navbar>
+    <div className="pt-32 bg-gradient-to-b from-rose-100 to-pink-50">
+  <Navbar></Navbar>
       <section className="w-full px-4 py-16 text-center max-w-4xl mx-auto">
         <h1 className="text-4xl sm:text-5xl text-red-900 font-serif font-bold">JFLOWG</h1>
         <p className="mt-4 text-pink-900 text-base sm:text-lg font-mono">
