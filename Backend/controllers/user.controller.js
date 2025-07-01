@@ -1,11 +1,12 @@
 import fs from 'fs';
-import {fileURLToPath} from 'url';
+import { fileURLToPath } from 'url';
 import path from 'path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const usersFilePath = path.join(__dirname, '../data/users.json');
-const getUsers = () => JSON.parse(fs.readFileSync(usersFilePath, 'utf-8'));
+const getUsers = () => JSON.parse(fs.readFileSync(usersFilePath, 'utf-8')),
+    findUser = id => getUsers().find(u => u.id === parseInt(id));
 
 const userController = {
 
@@ -41,18 +42,20 @@ const userController = {
     },
 
     updateUser: async (request, reply) => {
-            const userExist = getUsers().find(u => u.id === parseInt(request.params.id));
-            if (!request.body) return reply.code(400).send('Error al enviar formulario')
-            if (!userExist) return reply.code(404).send('No se encontráron recursos');
-            const users = getUsers().map(u => u.id === parseInt(request.params.id) ? { ...u, ...request.body } : u);
-            fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
-            reply.code(200).redirect('/api/v1/users');
-        },
-
-    deleteUser:  async (request, reply) => {
-        const userExist = getUsers().find(p => p.id === parseInt(request.params.id));
+        const id = request.params.id,
+            userExist = findUser(id)
+        if (!request.body) return reply.code(400).send('Error en el formulario')
         if (!userExist) return reply.code(404).send('No se encontráron recursos');
-        const users = getUsers().filter(p => p.id !== parseInt(request.params.id));
+        const users = getUsers().map(u => u.id === parseInt(id) ? { ...u, ...request.body } : u);
+        fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
+        reply.code(200).redirect('/api/v1/users');
+    },
+
+    deleteUser: async (request, reply) => {
+        const id = request.params.id,
+            userExist = findUser(id);
+        if (!userExist) return reply.code(404).send('No se encontráron recursos');
+        const users = getUsers().filter(u => u.id !== parseInt(id));
         fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
         reply.code(200).redirect('/api/v1/users')
     }

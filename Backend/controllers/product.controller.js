@@ -14,7 +14,6 @@ const productController = {
         return reply.send({
             count: getProducts().length,
             products: getProducts()
-
         })
     },
 
