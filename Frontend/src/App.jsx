@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 
 //Auth Pages
-
+import Login from './auth/pages/Login';
+import Register from "./auth/pages/Register";
+import ForgotPassword from "./auth/pages/ForgotPassword";
 
 
 //Shop Pages
@@ -31,7 +33,13 @@ function App() {
   return (
     <Router>
       
-      <Routes>
+        <Routes>
+
+      
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Register" element={<Register />} />
+         <Route path="/Forgot-password" element={<ForgotPassword />} />
+
 
       
 
