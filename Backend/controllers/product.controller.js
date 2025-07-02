@@ -19,15 +19,18 @@ const productController = {
 
     getProduct: async (request, reply) => {
         const id = request.params.id,
-            product = findProduct(id)
+            product = findProduct(id);
+            console.log(product);
+            
         if (!product) reply.status(404).send("No se encontráron recursos");
         return reply.send(product);
     },
 
     storeProduct: async (request, reply) => {
         const products = getProducts();
+        console.log(request.body)
+        if (!request.body || !request.body.name || !request.body.price || !request.body.category) return reply.code(400).send('Error en el formulario')
 
-        if (!request.body || !request.body.name || !request.body.price || request.body.category) {
             const newProduct = {
                 id: products.length + 1,
                 ...request.body
@@ -35,7 +38,7 @@ const productController = {
             products.push(newProduct);
             fs.writeFileSync(productFilePath, JSON.stringify(products, null, 2));
             reply.code(201).redirect('/api/v1/products');
-        }
+        
     },
 
     updateProduct: async (request, reply) => {
@@ -48,7 +51,7 @@ const productController = {
         reply.code(200).redirect('api/v1/products');
     },
 
-    deleteUser: async (request, reply) => {
+    deleteProduct: async (request, reply) => {
         const id = request.params.id,
             productExist = findProduct(id);
         if (!productExist) return reply.code(404).send('No se encontráron recursos');
