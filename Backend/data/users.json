@@ -1,22 +1,28 @@
 [
   {
     "id": 1,
-    "name": "Carlos Pérez",
+    "name": "Carlos",
+    "lastName": "Pérez",
     "email": "carlos@example.com",
     "password": "$2b$10$...",
     "address": "Calle Falsa 123, Ciudad",
     "phone": "+1234567890",
     "role": "customer",
-    "createdAt": "2024-01-01T10:00:00Z"
+    "createdAt": "2024-01-01T10:00:00Z",
+    "updatedAt": "2024-05-01T10:00:00Z"
+
   },
   {
     "id": 2,
-    "name": "Ana López",
+    "name": "Ana",
+    "lastName": "López",
     "email": "ana@example.com",
     "password": "$2b$10$...",
     "address": "Av. Real 456, Ciudad",
     "phone": "+1234567891",
     "role": "customer",
-    "createdAt": "2024-02-01T12:30:00Z"
+    "createdAt": "2024-02-01T12:30:00Z",
+    "updatedAt": "2024-05-01T10:00:00Z"
+
   }
 ]
