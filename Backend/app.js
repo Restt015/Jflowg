@@ -14,10 +14,5 @@ fastify.register(userRoutes);
 fastify.register(productRoutes);
 
 
-// Run the server
-fastify.listen({ port: PORT }, (err) => {
-    if (err) {
-        fastify.log.error(err)
-        process.exit(1)
-    }
-})
+
+export default fastify;
