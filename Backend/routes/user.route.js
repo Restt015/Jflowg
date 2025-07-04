@@ -1,4 +1,5 @@
 import userController from '../controllers/user.controller.js';
+import { registerSchema, loginSchema, updateSchema } from '../validators/user.validator.js';
 
 const userRoutes = async (fastify, options) => {
 

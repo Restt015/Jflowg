@@ -7,7 +7,7 @@
     "password": "$2b$10$...",
     "address": "Calle Falsa 123, Ciudad",
     "phone": "+1234567890",
-    "role": "customer",
+    "role": 2,
     "createdAt": "2024-01-01T10:00:00Z",
     "updatedAt": "2024-05-01T10:00:00Z"
   },
@@ -19,7 +19,7 @@
     "password": "$2b$10$...",
     "address": "Av. Real 456, Ciudad",
     "phone": "+1234567891",
-    "role": "customer",
+    "role": 2,
     "createdAt": "2024-02-01T12:30:00Z",
     "updatedAt": "2024-05-01T10:00:00Z"
   },
