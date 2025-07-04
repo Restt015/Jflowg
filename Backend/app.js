@@ -3,7 +3,7 @@ import 'dotenv/config';
 // ESM
 import Fastify from 'fastify';
 import fastifyCookie from '@fastify/cookie';
-import fastifySession from 'fastify-session';
+import fastifySession from '@fastify/session';
 import userRoutes from './routes/user.route.js';
 import productRoutes from './routes/product.route.js';
 import cors from '@fastify/cors';

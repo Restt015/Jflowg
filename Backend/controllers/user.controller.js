@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import hashPassword from '../utils/hashPassword.js';
+import { hashPassword, comparePassword } from '../utils/hashPassword.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -27,21 +27,6 @@ const userController = {
 
     },
 
-    storeUser: async (request, reply) => {
-        const users = getUsers()
-        console.log(request.body);
-
-        if (!request.body || !request.body.email || !request.body.password) return reply.code(400).send('Error al enviar formulario')
-
-        const newUser = {
-            id: users.length + 1,
-            ...request.body
-        };
-        users.push(newUser);
-        fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
-        reply.code(201).redirect('/api/v1/users');
-    },
-
     updateUser: async (request, reply) => {
         const id = request.params.id,
             userExist = findUser(id)
@@ -63,13 +48,13 @@ const userController = {
 
     // >>> Rutas de Sesión <<<
 
-    registerUser: async (request, reply) => {
+    storeUser: async (request, reply) => {
         const { name, lastName, email, password, confirmPassword } = request.body;
         if (!name || !lastName || !email || !password || !confirmPassword) {
             return reply.code(400).send('Todos los campos son requeridos');
         }
         if (password !== confirmPassword) return reply.code(400).send('Error al ingresar contraseñas');
-        hashPassword(password)
+        await hashPassword(password)
             .then(hashedPassword => {
                 const users = getUsers();
                 const newUser = {
@@ -110,11 +95,12 @@ const userController = {
 
         const users = getUsers();
         const user = users.find(u => u.email === email);
-        
+
         // Verificar usuario y contraseña
-        const isPasswordValid = await hashPassword.compare(password, user.password);
-        if (!user || !isPasswordValid) return reply.code(401).send('Error al iniciar sesión');
-        
+        if (!user) return reply.code(401).send('Email o contraseña incorrectos');
+        const isPasswordValid = await comparePassword(password, user.password);
+        if (!isPasswordValid) return reply.code(401).send('email o contraseña incorrectos');
+
         // Iniciar sesión
         request.session.user = {
             id: user.id,
@@ -128,10 +114,10 @@ const userController = {
     },
 
     logoutUser: async (request, reply) => {
-        if(!request.session.user) return reply.code(400).send('No hay sesión activa');
+        if (!request.session.user) return reply.code(400).send('No hay sesión activa');
         // Cerrar sesión
         request.session.destroy(err => {
-            if(err){
+            if (err) {
                 console.error(err);
                 return reply.code(400).send('Error al cerrar sesión');
             }

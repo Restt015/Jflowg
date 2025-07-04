@@ -10,7 +10,6 @@
     "role": "customer",
     "createdAt": "2024-01-01T10:00:00Z",
     "updatedAt": "2024-05-01T10:00:00Z"
-
   },
   {
     "id": 2,
@@ -23,6 +22,17 @@
     "role": "customer",
     "createdAt": "2024-02-01T12:30:00Z",
     "updatedAt": "2024-05-01T10:00:00Z"
-
+  },
+  {
+    "id": 3,
+    "name": "Test Nombre Usuario",
+    "lastName": "Test Apellido",
+    "email": "email.test@test.com",
+    "password": "$2b$12$QE6l6XG8k9d8rRPxuKdIrupR4m1GBRXsx/8AzmlywV9yVb0xWM6uG",
+    "address": "",
+    "phone": "",
+    "role": 2,
+    "createdAt": "2025-07-04T00:56:36.495Z",
+    "updatedAt": "2025-07-04T00:56:36.496Z"
   }
 ]
