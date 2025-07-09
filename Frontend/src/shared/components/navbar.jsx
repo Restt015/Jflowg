@@ -22,10 +22,10 @@ function Navbar() {
             </button>
           </div>    
           <div className="hidden md:flex space-x-6 text-base font-medium text-gray-800">
-            <a href="#" className="hover:text-red-800">Novedades</a>
-            <a href="#" className="hover:text-red-800">Hombre</a>
-            <a href="#" className="hover:text-red-800">Mujer</a>
-            <a href="#" className="hover:text-red-800">Accesorios</a>
+          <Link to ="/Articles" className="hover:text-red-800">Catalogo</Link>
+            <a href="#" className="hover:text-red-800">Acerca de Nosotros</a>
+            <a href="#" className="hover:text-red-800">Blog</a>
+            <a href="#" className="hover:text-red-800">Contact</a>
           </div>
          <div className="hidden md:flex items-center space-x-6">
   <div className="relative">

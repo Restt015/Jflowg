@@ -2,7 +2,7 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaChevronUp } from "react-icons/fa
 
 function Footer() {
   return (
-    <footer className="bg-red-200 text-rose-900 py-10 px-6">
+    <footer className="bg-gray-200 text-rose-900 py-10 px-6">
   <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
     <div>
       <h4 className="font-bold text-lg text-rose-950 mb-2">Logo</h4>

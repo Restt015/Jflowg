@@ -21,7 +21,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-red-50 flex flex-col items-center justify-center px-4 py-12 font-orbitron">
+    <div className="min-h-screen bg-gradient-to-b from-rose-100 to-gray-400 flex flex-col items-center justify-center px-4 py-12 font-orbitron">
       {/* Logo y Bienvenida */}
       <div className="text-center mb-6">
         <h1 className="text-4xl  text-red-700 mb-1">JFLOWG</h1>
