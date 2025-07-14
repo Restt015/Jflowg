@@ -25,7 +25,7 @@ const loginSchema = {
     },
 }
 
-const updateSchema = {
+const updateSchema = { //Cambiar en relación al figma
     body: {
         type: 'object',
         properties: {
@@ -40,7 +40,7 @@ const updateSchema = {
     }
 }
 
-export default{
+export {
     registerSchema,
     loginSchema,
     updateSchema

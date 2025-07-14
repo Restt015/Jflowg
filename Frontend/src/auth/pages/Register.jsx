@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { registerUser } from "../../services/userService";
 import { FaUser, FaEnvelope, FaLock, FaGoogle, FaFacebook } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function Register() {
   const [form, setForm] = useState({
-    nombre: "",
-    apellido: "",
+    name: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -17,9 +18,15 @@ export default function Register() {
     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
+    try {
+      await registerUser(form);
+      alert("Usuario registrado exitosamente");
+      window.location.href = '/Home';
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
@@ -46,8 +53,8 @@ export default function Register() {
               <FaUser className="text-gray-400 mr-2" />
               <input
                 type="text"
-                name="nombre"
-                value={form.nombre}
+                name="name"
+                value={form.name}
                 onChange={handleChange}
                 className="w-full text-sm focus:outline-none"
                 placeholder="Tu nombre"
@@ -61,8 +68,8 @@ export default function Register() {
               <FaUser className="text-gray-400 mr-2" />
               <input
                 type="text"
-                name="apellido"
-                value={form.apellido}
+                name="lastName"
+                value={form.lastName}
                 onChange={handleChange}
                 className="w-full text-sm focus:outline-none"
                 placeholder="Tu apellido"

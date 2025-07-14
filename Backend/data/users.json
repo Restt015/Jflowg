@@ -34,5 +34,29 @@
     "role": 2,
     "createdAt": "2025-07-04T00:56:36.495Z",
     "updatedAt": "2025-07-04T00:56:36.496Z"
+  },
+  {
+    "id": 4,
+    "name": "(TEST) Carlos Sánchez",
+    "lastName": "(TEST)Sánchez",
+    "email": "carlos@example.com",
+    "password": "$2b$12$.z5ugIrZs4PKOD5QEj3Zd.DpNBfxr4u4yXOy.Ikhr0pYhYtzjEi8.",
+    "address": "",
+    "phone": "",
+    "role": 2,
+    "createdAt": "2025-07-14T17:14:47.428Z",
+    "updatedAt": "2025-07-14T17:14:47.428Z"
+  },
+  {
+    "id": 5,
+    "name": "(TEST) Cesar",
+    "lastName": "(TEST) Bernal",
+    "email": "example.mail@email.com",
+    "password": "$2b$12$4b2x38C./ZJicGI1z3qrNuNh2nGWM4mB75fqhpOdL59lAkchv7rla",
+    "address": "",
+    "phone": "",
+    "role": 2,
+    "createdAt": "2025-07-14T17:54:33.504Z",
+    "updatedAt": "2025-07-14T17:54:33.504Z"
   }
 ]

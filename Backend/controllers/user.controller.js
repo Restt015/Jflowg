@@ -50,6 +50,8 @@ const userController = {
 
     storeUser: async (request, reply) => {
         const { name, lastName, email, password, confirmPassword } = request.body;
+        console.log(confirmPassword);
+        
         if (!name || !lastName || !email || !password || !confirmPassword) {
             return reply.code(400).send('Todos los campos son requeridos');
         }
@@ -110,7 +112,7 @@ const userController = {
             role: user.role
         };
         request.session.save();
-        reply.code(200).redirect('/api/v1/users');
+        // reply.code(200).redirect('/api/v1/users');
     },
 
     logoutUser: async (request, reply) => {

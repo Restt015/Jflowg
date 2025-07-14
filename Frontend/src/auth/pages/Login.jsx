@@ -8,6 +8,8 @@ import {
   FaEye,
   FaEyeSlash,
 } from "react-icons/fa";
+import { loginUser } from "../../services/userService"
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -15,10 +17,19 @@ export default function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log({ email, password, rememberMe });
-  };
+    try {
+      await loginUser({email, password});
+      alert("Inicio de sesión exitoso");
+      if(loginUser){
+        window.location.href = '/Home'
+      }
+  }catch (err) {
+      alert(err.message);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-red-50 flex flex-col items-center justify-center px-4 py-12 font-orbitron">

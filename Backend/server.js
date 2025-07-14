@@ -1,6 +1,6 @@
 import fastify from './app.js';
 
-const PORT = 3000
+const PORT = 3001
 // Run the server
 const start = async () => {
   try {
