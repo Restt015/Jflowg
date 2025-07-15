@@ -9,7 +9,7 @@ const registerSchema = {
             email: { type: 'string', format: 'email' },
             password: { type: 'string', minLength: 8, maxLength: 100, pattern: '^.{8,}$' }, // Patrón sencillo para desarrollo
         },
-        additionalProperties: false,
+        additionalProperties: true,
     },
 }
 
@@ -18,30 +18,35 @@ const loginSchema = {
         type: 'object',
         required: ['email', 'password'],
         properties: {
-            email: { type: 'struing', format: 'email' },
+            email: { type: 'string', format: 'email' },
             password: { type: 'string', minLength: 8, maxLength: 100 }
         },
         additionalProperties: false,
     },
 }
 
-const updateSchema = { //Cambiar en relación al figma
+const profilePatchSchema = { 
     body: {
         type: 'object',
         properties: {
             name: { type: 'string', minLength: 1, maxLength: 25, pattern: "^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$" },
             lastName: { type: 'string', minLength: 5, maxLength: 50 },
-            password: { type: 'string', minLength: 8, maxLength: 100, pattern: '^.{8,}$' },
-            address: { type: 'string', minLength: 5, maxLength: 100 },
             phone: { type: 'string', pattern: "^\\+\\d{1,3}\\s?\\d{4,14}$" },
+            birthDate: { type: 'string', format: 'date' },
+            gender: { type: 'string', enum: ['male', 'female', 'other'] },
+            address: { type: 'string', minLength: 5, maxLength: 100 },
+            postalCode: { type: 'string', pattern: '^\\d{4,5}$' },
+            country: { type: 'string', minLength: 2, maxLength: 50 },
+            city: { type: 'string', minLength: 2, maxLength: 50 },
+            state: { type: 'string', minLength: 2, maxLength: 50 }
         },
-        additionalProperties: false, // rechaza campos no definidos
-        minProperties: 1, // requiere al menos un campo
+        additionalProperties: false,
+        minProperties: 1,
     }
 }
 
 export {
     registerSchema,
     loginSchema,
-    updateSchema
+    profilePatchSchema
 }

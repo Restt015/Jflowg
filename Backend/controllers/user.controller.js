@@ -27,7 +27,7 @@ const userController = {
 
     },
 
-    updateUser: async (request, reply) => {
+    updateUserProfile: async (request, reply) => {
         const id = request.params.id,
             userExist = findUser(id)
         if (!request.body) return reply.code(400).send('Error en el formulario')
@@ -51,9 +51,12 @@ const userController = {
     storeUser: async (request, reply) => {
         const { name, lastName, email, password, confirmPassword } = request.body;
         console.log(confirmPassword);
-        
+
         if (!name || !lastName || !email || !password || !confirmPassword) {
             return reply.code(400).send('Todos los campos son requeridos');
+        }
+        if (getUsers().find(u => u.email === email)) {
+            return reply.code(400).send('Algo salió mal');
         }
         if (password !== confirmPassword) return reply.code(400).send('Error al ingresar contraseñas');
         await hashPassword(password)
@@ -65,8 +68,14 @@ const userController = {
                     lastName,
                     email,
                     password: hashedPassword,
-                    address: "",
                     phone: "",
+                    birthDate: "",
+                    gender: "",
+                    address: "",
+                    postalCode: "",
+                    country: "",
+                    city: "",
+                    state: "",
                     role: 2,
                     createdAt: new Date().toISOString(),
                     updatedAt: new Date().toISOString()
@@ -83,7 +92,7 @@ const userController = {
                     role: newUser.role
                 }
                 request.session.save();
-                reply.code(201).redirect('/api/v1/users');
+                reply.code(201).send({ user: request.session.user, redirectTo: '/Home' });
             })
             .catch(err => {
                 console.error(err);
@@ -112,7 +121,7 @@ const userController = {
             role: user.role
         };
         request.session.save();
-        // reply.code(200).redirect('/api/v1/users');
+        reply.code(200).send({ user: request.session.user, redirectTo: '/Home' });
     },
 
     logoutUser: async (request, reply) => {

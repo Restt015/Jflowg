@@ -19,13 +19,8 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ email, password, rememberMe });
     try {
       await loginUser({email, password});
-      alert("Inicio de sesión exitoso");
-      if(loginUser){
-        window.location.href = '/Home'
-      }
   }catch (err) {
       alert(err.message);
     }

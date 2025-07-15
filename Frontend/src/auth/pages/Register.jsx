@@ -22,8 +22,6 @@ export default function Register() {
     e.preventDefault();
     try {
       await registerUser(form);
-      alert("Usuario registrado exitosamente");
-      window.location.href = '/Home';
     } catch (err) {
       alert(err.message);
     }

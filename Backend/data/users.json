@@ -58,5 +58,17 @@
     "role": 2,
     "createdAt": "2025-07-14T17:54:33.504Z",
     "updatedAt": "2025-07-14T17:54:33.504Z"
+  },
+  {
+    "id": 6,
+    "name": "TESST",
+    "lastName": "USSER",
+    "email": "example.email@email.com",
+    "password": "$2b$12$pD.BgxXVnG7fKertNmL5xOxmm0Haexxzsuf6d2u87/VOl72ugPO4q",
+    "address": "",
+    "phone": "",
+    "role": 2,
+    "createdAt": "2025-07-15T14:01:40.093Z",
+    "updatedAt": "2025-07-15T14:01:40.093Z"
   }
 ]

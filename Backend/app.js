@@ -23,7 +23,7 @@ fastify.register(fastifySession, {
 
 fastify.register(cors, {
   origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   authorized: true
 })
 
