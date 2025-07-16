@@ -28,7 +28,7 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-rose-50 to-pink-50 flex flex-col items-center justify-center px-4 py-10 font-orbitron">
+    <div className="min-h-screen bg-gradient-to-tr from-rose-50 to-white flex flex-col items-center justify-center px-4 py-10 font-orbitron">
       {/* Logo */}
       <h1 className="text-4xl text-red-700 mb-1">JFLOWG</h1>
       <p className="text-sm text-gray-600 mb-3">Crea tu cuenta nueva</p>
