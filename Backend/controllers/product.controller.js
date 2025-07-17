@@ -1,63 +1,55 @@
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-import path from 'path';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const productFilePath = path.join(__dirname, '../data/products.json');
-
-const getProducts = () => JSON.parse(fs.readFileSync(productFilePath, 'utf-8')),
-    findProduct = id => getProducts().find(p => parseInt(id) === p.id)
+import {Product} from '../models/product.model.js';
 
 const productController = {
 
     getProducts: async (request, reply) => {
+        const products = await Product.find()
+        .populate('sub_category_id')
+        .populate('variants');
         return reply.send({
-            count: getProducts().length,
-            products: getProducts()
-        })
+            count: products.length,
+            products: products
+        });
     },
 
+
     getProduct: async (request, reply) => {
-        const id = request.params.id,
-            product = findProduct(id);
-            console.log(product);
-            
-        if (!product) reply.status(404).send("No se encontráron recursos");
+        const id = request.params.id;
+        const product = await Product.findById(id) 
+        .populate('sub_category_id')
+        .populate('variants');
+        if (!product) return reply.status(404).send("No se encontraron recursos");
         return reply.send(product);
     },
 
-    storeProduct: async (request, reply) => {
-        const products = getProducts();
-        console.log(request.body)
-        if (!request.body || !request.body.name || !request.body.price || !request.body.category) return reply.code(400).send('Error en el formulario')
 
-            const newProduct = {
-                id: products.length + 1,
-                ...request.body
-            };
-            products.push(newProduct);
-            fs.writeFileSync(productFilePath, JSON.stringify(products, null, 2));
-            reply.code(201).redirect('/api/v1/products');
-        
+    storeProduct: async (request, reply) => {
+        const { name, price, category, description, image } = request.body;
+        if (!name || !price || !category) return reply.code(400).send('Error en el formulario');
+        try {
+            const newProduct = await Product.create({ name, price, category, description, image });
+            reply.code(201).send(newProduct);
+        } catch (err) {
+            console.error(err);
+            reply.code(500).send('Error al crear producto');
+        }
     },
+
 
     updateProduct: async (request, reply) => {
-        const id = request.params.id,
-            productExist = findProduct(id);
+        const id = request.params.id;
         if (!request.body) return reply.code(400).send('Error en el formulario');
-        if (!productExist) return reply.code(404).send('No se encontráron recursos');
-        const products = getProducts().map(p => p.id === parseInt(id) ? { ...p, ...request.body } : p);
-        fs.writeFileSync(productFilePath, JSON.stringify(products, null, 2));
-        reply.code(200).redirect('api/v1/products');
+        const product = await Product.findByIdAndUpdate(id, request.body, { new: true });
+        if (!product) return reply.code(404).send('No se encontraron recursos');
+        reply.code(200).send(product);
     },
 
+
     deleteProduct: async (request, reply) => {
-        const id = request.params.id,
-            productExist = findProduct(id);
-        if (!productExist) return reply.code(404).send('No se encontráron recursos');
-        const products = getProducts().filter(p => p.id !== parseInt(id));
-        fs.writeFileSync(productFilePath, JSON.stringify(products, null, 2));
-        reply.code(200).redirect('/api/v1/products');
+        const id = request.params.id;
+        const product = await Product.findByIdAndDelete(id);
+        if (!product) return reply.code(404).send('No se encontraron recursos');
+        reply.code(200).send('Producto eliminado');
     }
 };
 

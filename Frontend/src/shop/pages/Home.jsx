@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 function Home() {
   return (
-    <div className="pt-32 bg-gradient-to-b from-rose-200 to-gray-100 min-h-screen">
+    <div className="pt-32 bg-gradient-to-tr bg-ori from-rose-50 to-white min-h-screen">
   <Navbar></Navbar>
       <section className="w-full px-4 py-16 text-center max-w-4xl mx-auto">
         <h1 className="text-4xl sm:text-5xl text-red-900 font-serif font-bold">JFLOWG</h1>

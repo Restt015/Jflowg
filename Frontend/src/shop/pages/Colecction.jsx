@@ -29,7 +29,7 @@ function Colecction() {
   ];
 
   return (
-    <div className="pt-32 bg-gradient-to-b from-rose-200 to-gray-100 min-h-screen flex flex-col">
+    <div className="pt-32 bg-gradient-to-tr from-rose-50 to-white min-h-screen flex flex-col">
       <Navbar />
 
       <div className="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto px-6 mb-16">

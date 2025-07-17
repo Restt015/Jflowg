@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaUser, FaUserPlus, FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Cart from '../../shop/pages/Cart'
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +51,7 @@ function Navbar() {
 <Link to="/Register" className="flex items-center gap-2 bg-white text-pink-900 hover:bg-pink-50 hover:text-pink-900 text-sm px-4 py-2 rounded-md transition duration-200 shadow-sm">
   <FaUser /> Crear Cuenta
 </Link>
-  
+  <Cart />
 </div>
        </div>     
         {isOpen && (
