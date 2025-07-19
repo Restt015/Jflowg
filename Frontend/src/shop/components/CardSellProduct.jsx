@@ -7,10 +7,10 @@ function CardSellProduct({
   oldPrice,
   image,
   badge,
-  badgeColor = "bg-red-500",
+  badgeColor = "bg-red-400",
 }) {
   return (
-    <div className="bg-white rounded-xl shadow-md w-full max-w-[260px] mx-auto relative transition hover:shadow-lg">
+    <div className="bg-white¿¿ rounded-xl shadow-md w-full max-w-[260px] mx-auto relative transition hover:shadow-lg">
       
       {badge && (
         <span

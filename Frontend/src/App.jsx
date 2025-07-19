@@ -12,6 +12,7 @@ import ForgotPassword from "./auth/pages/ForgotPassword";
 import Home from "./shop/pages/Home";
 import Articles from "./shop/pages/Articles";
 import Colecction from "./shop/pages/colecction";
+import ProductDetail from "./shop/pages/ProductDetail";
 
 
 
@@ -58,6 +59,7 @@ function App() {
         <Route path="/Home" element={<Home />} />
         <Route path="/Articles" element={<Articles />} />
         <Route path="/Colecction" element={<Colecction />} />
+        <Route path="/Articles/:id" element={<ProductDetail />} />
 
         
         

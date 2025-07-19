@@ -33,7 +33,7 @@ function SidebarFilter() {
       </div>
 
       <h3 className="font-bold mb-2 text-lg">Colores</h3>
-      <div className="grid grid-cols-4 gap-2 mb-6">
+      <div className="grid grid-cols-4 gap-2 mb-6 place-items-center">
         {[
           "bg-red-500",
           "bg-blue-500",
