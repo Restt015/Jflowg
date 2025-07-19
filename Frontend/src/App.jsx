@@ -14,6 +14,7 @@ import Articles from "./shop/pages/Articles";
 import Colecction from "./shop/pages/colecction";
 
 
+
 //User Pages
 
 
@@ -57,6 +58,7 @@ function App() {
         <Route path="/Home" element={<Home />} />
         <Route path="/Articles" element={<Articles />} />
         <Route path="/Colecction" element={<Colecction />} />
+
         
         
         

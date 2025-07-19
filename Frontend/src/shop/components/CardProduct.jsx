@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Heart, Eye, X } from "lucide-react";
+import { Heart, Eye, X, ShoppingCart } from "lucide-react";
 
-function CardProduct({ title, description, image }) {
+function CardProduct({ title, description, image, price }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -9,16 +9,20 @@ function CardProduct({ title, description, image }) {
 
   return (
     <div>
-      {/* Tu diseño original con iconos mínimos */}
+      {/* Tarjeta */}
       <div className="bg-pink-100 rounded-2xl shadow-lg w-full max-w-sm mx-auto transition-transform hover:scale-105 duration-300">
-        <div className="bg-gray-400 flex items-center justify-center h-48 rounded-t-2xl relative group">
+        <div className="bg-gray-400 flex items-center justify-center h-48 rounded-t-2xl relative group overflow-hidden">
           {image ? (
             <img src={image} alt={title} className="h-24 object-contain" />
           ) : (
-            <span className="text-base text-gray-900">IMAGEN AQUÍ</span>
+            <img
+              src="https://cataas.com/cat?type=square"
+              alt="Gatito"
+              className="w-full h-full object-cover"
+            />
           )}
-          
-          {/* Iconos flotantes - solo aparecen en hover */}
+
+          {/* Iconos flotantes */}
           <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button className="p-2 bg-white text-gray-600 rounded-full shadow-md hover:bg-gray-50 transition-all duration-200">
               <Heart className="w-4 h-4" />
@@ -29,12 +33,17 @@ function CardProduct({ title, description, image }) {
             >
               <Eye className="w-4 h-4" />
             </button>
+            <button className="p-2 bg-white text-gray-600 rounded-full shadow-md hover:bg-gray-50 transition-all duration-200">
+              <ShoppingCart className="w-4 h-4" />
+            </button>
           </div>
         </div>
-        
-        <div className="bg-white text-center px-6 py-4 rounded-b-2xl min-h-28 flex flex-col justify-center">
-          <h3 className="text-lg font-bold text-gray-800 mb-1">{title}</h3>
+
+        <div className="bg-white text-center px-6 py-4 rounded-b-2xl min-h-28 flex flex-col justify-center space-y-1">
+          <h3 className="text-lg font-bold text-gray-800">{title}</h3>
           <p className="text-sm text-gray-600">{description}</p>
+          {/* Precio */}
+          <p className="text-red-600 font-semibold text-base">${price?.toFixed(2)}</p>
         </div>
       </div>
 
@@ -57,26 +66,29 @@ function CardProduct({ title, description, image }) {
             <div className="p-6">
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Imagen del producto */}
-                <div className="bg-gray-100 rounded-xl p-8 flex items-center justify-center min-h-72">
+                <div className="bg-gray-100 rounded-xl p-8 flex items-center justify-center min-h-72 overflow-hidden">
                   {image ? (
                     <img src={image} alt={title} className="max-w-full max-h-60 object-contain" />
                   ) : (
-                    <div className="bg-gray-300 w-48 h-32 rounded-lg flex items-center justify-center">
-                      <span className="text-gray-600">IMAGEN AQUÍ</span>
-                    </div>
+                    <img
+                      src="https://cataas.com/cat?type=square"
+                      alt="Gatito"
+                      className="w-full h-full object-cover"
+                    />
                   )}
                 </div>
 
                 {/* Información detallada */}
                 <div className="space-y-4">
                   <h3 className="text-xl font-bold text-gray-900">{title}</h3>
-                  
+                  {/* Precio */}
+                  <p className="text-red-600 font-semibold text-lg">${price?.toFixed(2)}</p>
+
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-2">Descripción</h4>
                     <p className="text-gray-600 leading-relaxed">{description}</p>
                   </div>
 
-                  {/* Información adicional */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-2">Detalles</h4>
                     <div className="text-sm text-gray-600 space-y-1">
@@ -86,7 +98,6 @@ function CardProduct({ title, description, image }) {
                     </div>
                   </div>
 
-                  {/* Botón de acción */}
                   <div className="pt-4">
                     <button className="w-full bg-red-600 text-white py-3 px-6 rounded-lg hover:bg-red-700 transition-colors duration-200 font-medium">
                       Ver más detalles
