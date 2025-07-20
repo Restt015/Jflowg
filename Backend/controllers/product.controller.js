@@ -6,6 +6,7 @@ const productController = {
         const products = await Product.find()
         .populate('sub_category_id')
         .populate('variants');
+        if (!products) return reply.status(404).send("No se encontraron recursos");
         return reply.send({
             count: products.length,
             products: products

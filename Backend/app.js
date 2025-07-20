@@ -4,8 +4,11 @@ import 'dotenv/config';
 import Fastify from 'fastify';
 import fastifyCookie from '@fastify/cookie';
 import fastifySession from '@fastify/session';
+
 import userRoutes from './routes/user.route.js';
 import productRoutes from './routes/product.route.js';
+import cartRoutes from './routes/cart.route.js';
+
 import cors from '@fastify/cors';
 
 const fastify = Fastify({
@@ -29,6 +32,7 @@ fastify.register(cors, {
 
 fastify.register(userRoutes);
 fastify.register(productRoutes);
+fastify.register(cartRoutes);
 
 
 export default fastify;
