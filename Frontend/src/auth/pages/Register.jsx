@@ -21,7 +21,9 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await registerUser(form);
+      const res = await registerUser(form);
+      sessionStorage.setItem('user', JSON.stringify(res.user))
+      window.location.href = res.redirectTo;
     } catch (err) {
       alert(err.message);
     }
@@ -188,8 +190,8 @@ export default function Register() {
       <footer className="text-center text-xs text-gray-500 mt-6">
         © 2024 JFLOWG. Todos los derechos reservados.
       </footer>
-      
+
     </div>
-    
+
   );
 }

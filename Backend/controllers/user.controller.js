@@ -19,16 +19,6 @@ const userController = {
         return reply.send(user);
     },
 
-
-    updateUserProfile: async (request, reply) => {
-        const id = request.params.id;
-        if (!request.body) return reply.code(400).send('Error en el formulario');
-        const user = await User.findByIdAndUpdate(id, request.body, { new: true });
-        if (!user) return reply.code(404).send('No se encontraron recursos');
-        reply.code(200).send(user);
-    },
-
-
     deleteUser: async (request, reply) => {
         const id = request.params.id;
         const user = await User.findByIdAndDelete(id);
@@ -100,7 +90,20 @@ const userController = {
             }
             reply.code(200).send('Sesión cerrada correctamente');
         })
-    }
+    },
+
+    showUserProfile: async (request, reply) => {
+        reply.send({ user: request.session.user });
+    },
+
+    updateUserProfile: async (request, reply) => {
+        const id = request.params.id;
+        if (!request.body) return reply.code(400).send('Error en el formulario');
+        const user = await User.findByIdAndUpdate(id, request.body, { new: true });
+        if (!user) return reply.code(404).send('No se encontraron recursos');
+        reply.code(200).send(user);
+    },
+
 }
 
 export default userController;    

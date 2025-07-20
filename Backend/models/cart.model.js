@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-
+import { ProductVariant } from '../models/productVariant.model.js';
 
 const cartItemSchema = new Schema({
     product_id: { type: Schema.Types.ObjectId, ref: 'products', required: true },

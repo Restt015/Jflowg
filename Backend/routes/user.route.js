@@ -1,5 +1,6 @@
 import userController from '../controllers/user.controller.js';
 import { registerSchema, loginSchema, profilePatchSchema } from '../validators/user.validator.js';
+import { isNotLogedIn, isLogedIn } from '../validators/auth.validator.js';
 
 const userRoutes = async (fastify, options) => {
 
@@ -12,16 +13,24 @@ const userRoutes = async (fastify, options) => {
         schema: registerSchema,
         handler: userController.storeUser
     });
+
     fastify.post('/api/v1/users/login', {
         schema: loginSchema,
         handler: userController.loginUser
     });
+
+    fastify.get('/api/v1/users/:id/profile', {
+        preHandler: isLogedIn,
+        handler: userController.showUserProfile
+    });
+
     fastify.patch('/api/v1/users/:id/profile', {
         schema: profilePatchSchema,
         handler: userController.updateUserProfile
     });
+
     fastify.get('/api/v1/users/logout', userController.logoutUser);
-    
+
 }
 
 export default userRoutes;

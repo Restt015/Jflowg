@@ -20,11 +20,14 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await loginUser({email, password});
-  }catch (err) {
+      const res = await loginUser({ email, password });
+      sessionStorage.setItem('user', JSON.stringify(res.user))
+      window.location.href = res.redirectTo;
+    } catch (err) {
       alert(err.message);
     }
   }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-tr bg-ori from-rose-50 to-white flex flex-col items-center justify-center px-4 py-12 font-orbitron">
