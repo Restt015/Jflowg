@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { FaUser, FaUserPlus, FaBars, FaShoppingCart, FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
-import Cart from '../../shop/pages/Cart'
-=======
 import DialogCart from "../../shop/components/DialogCart";
->>>>>>> 85c84f41ca7b0a61d315de84e647afac7c7ab2ce
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,34 +31,6 @@ function Navbar() {
             <a href="#" className="hover:text-red-800">Blog</a>
             <a href="#" className="hover:text-red-800">Contacto</a>
           </div>
-<<<<<<< HEAD
-         <div className="hidden md:flex items-center space-x-6">
-  <div className="relative">
-    <input
-      className="border border-gray-300 bg-white h-10 pl-3 pr-10 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-pink-300 shadow-sm"
-      type="search"
-      placeholder="Búsqueda"
-    />
-    <button type="submit" className="absolute right-3 top-2.5">
-      <svg
-        className="text-gray-600 h-4 w-4"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-      >
-        <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 4.47l4.58 4.58a1 1 0 01-1.42 1.42l-4.58-4.58A6 6 0 012 8z" />
-      </svg>
-    </button>
-  </div>
-  <Link to="/Login" className="flex items-center gap-2 bg-white text-pink-900 hover:bg-pink-50 hover:text-pink-900 text-sm px-4 py-2 rounded-md transition duration-200 shadow-sm">
-  <FaUser /> Iniciar sesión 
-</Link>
-<Link to="/Register" className="flex items-center gap-2 bg-white text-pink-900 hover:bg-pink-50 hover:text-pink-900 text-sm px-4 py-2 rounded-md transition duration-200 shadow-sm">
-  <FaUser /> Crear Cuenta
-</Link>
-  <Cart />
-</div>
-       </div>     
-=======
 
           <div className="hidden md:flex items-center space-x-6">
             {/* Búsqueda */}
@@ -116,7 +84,6 @@ function Navbar() {
         </div>
 
         {/* Menú móvil */}
->>>>>>> 85c84f41ca7b0a61d315de84e647afac7c7ab2ce
         {isOpen && (
           <div className="md:hidden mt-4 px-4 space-y-3 text-gray-800">
             <a href="#" className="block hover:text-red-800">Novedades</a>
