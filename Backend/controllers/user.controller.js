@@ -1,4 +1,6 @@
 
+import { ObjectId } from 'mongodb';
+import { Cart } from '../models/cart.model.js';
 import User from '../models/user.model.js';
 import { hashPassword, comparePassword } from '../utils/hashPassword.js';
 
@@ -44,6 +46,21 @@ const userController = {
                 lastName,
                 email,
                 password: hashedPassword,
+                phone_number: "",
+                birth_date: Date(),
+                gender: "",
+                address: {
+                    street: "",
+                    postal_code: "",
+                    state: "",
+                    country: ""
+                },
+                role: 200,
+            });
+
+            await Cart.create({
+                user_id: new ObjectId(newUser._id),
+                items: []
             });
             // Iniciar sesión automáticamente después del registro
             request.session.user = {
@@ -51,7 +68,7 @@ const userController = {
                 name: newUser.name,
                 lastName: newUser.lastName,
                 email: newUser.email,
-                role: newUser.role || 2
+                role: newUser.role || 200
             };
             request.session.save();
             reply.code(201).send({ user: request.session.user, redirectTo: '/Home' });
