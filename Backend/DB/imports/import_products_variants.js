@@ -215,7 +215,7 @@ const variantes = [
     {
         _id: new ObjectId("68788f0eb0e883b9b85e7a8e"),
         sku: "SPTOP-PINK-S",
-        color: "rosa",
+        color: "pink",
         size: "S",
         price: 24.50,
         stock: 85,

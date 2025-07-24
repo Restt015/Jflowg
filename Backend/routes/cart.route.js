@@ -1,5 +1,6 @@
 import cartController from '../controllers/cart.controller.js';
 import { isLogedIn } from '../validators/auth.validator.js';
+
 const cartRoutes = async (fastify, options) => {
 
     fastify.get('/api/v1/cart', {
@@ -15,6 +16,15 @@ const cartRoutes = async (fastify, options) => {
         preHandler: isLogedIn,
         handler: cartController.deleteCartItem
     });
+
+    fastify.post('/api/v1/cart/checkout', {
+       
+        handler: cartController.checkout
+    });
+
+    fastify.get('/api/v1/success', cartController.success);
+
+    fastify.get('/api/v1/cancel', cartController.cancel);
     
 }
 
