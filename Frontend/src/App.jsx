@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { CartProvider } from './context/CartContext'; 
 
 //Auth Pages
 import Login from './auth/pages/Login';
@@ -18,7 +19,8 @@ import ProductDetail from "./shop/pages/ProductDetail";
 
 //User Pages
 
-
+import Profile from "./user/pages/Profile";
+import EditUserProfile from "./user/pages/EditProfile";
 
 
 //Admin Pages
@@ -35,8 +37,10 @@ import ProductDetail from "./shop/pages/ProductDetail";
 
 function App() {
   return (
-    <Router>
+    <CartProvider>
       
+    <Router>
+       
         <Routes>
 
       
@@ -67,7 +71,8 @@ function App() {
 
         {/* User Routes */}
 
-
+         <Route path="/Profile" element={<Profile/>} />
+        <Route path="/EditProfile" element={<EditUserProfile />} />
 
         {/* Admin Routes */}
 
@@ -81,6 +86,7 @@ function App() {
     
 
     </Router>
+    </CartProvider>
   );
 }
 

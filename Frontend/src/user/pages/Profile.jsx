@@ -1,168 +1,82 @@
-import React, { useState } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Pencil } from 'lucide-react';
+import Navbar from "../../shared/components/navbar";
+import Footer from "../../shared/components/Footer";
 
 export default function UserProfile() {
-  const [formData, setFormData] = useState({
-    name: 'María González',
-    lastName: '',
-    email: 'mariagonzalez@gmail.com',
-    phone: '+52 55 1234 5678',
-    birthDate: '1990-05-15',
-    gender: 'Género'
-  });
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  useEffect(() => {
+    const stored = sessionStorage.getItem("user") || localStorage.getItem("user");
+    if (stored) {
+      const userData = JSON.parse(stored);
+      setUser(userData);
+    }
+  }, []);
+
+  if (!user) return <p className="p-4">Cargando perfil...</p>;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center">
-          <button className="text-gray-600 hover:text-gray-800 mr-3">
-            <ArrowLeft size={24} />
-          </button>
-          <h1 className="text-xl font-semibold text-gray-800">Editar Perfil</h1>
-        </div>
-      </div>
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-rose-200 to-gray-100">
+      <Navbar />
+      <main className="flex-grow max-w-6xl mx-auto px-6 py-28">
+        <h1 className="text-4xl font-extrabold text-rose-700 mb-12 text-center font-serif">Perfil del Usuario</h1>
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto p-6">
-        <p className="text-gray-600 mb-8">
-          Mantén tu información personal actualizada para una mejor experiencia
-        </p>
+        <div className="bg-white shadow-2xl rounded-3xl p-12 flex flex-col md:flex-row gap-12 items-center justify-center">
+          {/* User Info */}
+          <aside className="flex flex-col items-center text-center w-full md:w-1/3">
+            <div className="w-36 h-36 bg-rose-500 rounded-full flex items-center justify-center text-white text-5xl font-bold shadow-xl">
+              {user.name?.[0] ?? ''}{user.lastName?.[0] ?? ''}
+            </div>
+            <h2 className="mt-6 text-2xl font-bold text-gray-800">{user.name} {user.lastName}</h2>
+            
+            
+          </aside>
 
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Avatar Section */}
-            <div className="flex flex-col items-center space-y-4">
-              <div className="w-24 h-24 bg-red-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-2xl font-bold">MG</span>
-              </div>
-              <div className="text-center">
-                <h3 className="font-semibold text-gray-800">{formData.name}</h3>
-                <p className="text-gray-600 text-sm">{formData.email}</p>
-              </div>
-              <button className="text-red-500 border border-red-500 px-4 py-2 rounded-md hover:bg-red-50 text-sm">
-                Información Personal
+          {/* Personal Info */}
+          <div className="flex-1 w-full">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-semibold text-gray-800">Información Personal</h2>
+              <button
+                onClick={() => navigate('/EditProfile')}
+                className="flex items-center gap-2 text-white bg-rose-500 px-4 py-2 rounded-full hover:bg-rose-600 transition duration-200 shadow-md text-sm"
+              >
+                <Pencil size={16} /> Editar
               </button>
-              <div className="text-center">
-                <p className="text-gray-600 text-sm">Dirección</p>
-                <p className="text-gray-800 font-medium">Seguridad</p>
-              </div>
             </div>
 
-            {/* Form Section */}
-            <div className="flex-1">
-              <h2 className="text-lg font-semibold text-gray-800 mb-6">Información Personal</h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Nombre *
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder="Ingresa tu nombre"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Apellidos *
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    placeholder="Ingresa tus apellidos"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Correo Electrónico *
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="correo@ejemplo.com"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Teléfono
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    placeholder="+52 55 1234 5678"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Fecha de Nacimiento
-                  </label>
-                  <input
-                    type="date"
-                    name="birthDate"
-                    value={formData.birthDate}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Género
-                  </label>
-                  <select
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-                  >
-                    <option>Género</option>
-                    <option value="masculino">Masculino</option>
-                    <option value="femenino">Femenino</option>
-                    <option value="otro">Otro</option>
-                    <option value="no-especificar">Prefiero no especificar</option>
-                  </select>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6 text-base">
+              <div className="bg-red-50 p-5 rounded-xl shadow-sm">
+                <p className="text-gray-500 font-medium mb-1">Nombre</p>
+                <p className="text-gray-900 font-semibold truncate">{user.name}</p>
               </div>
-
-              {/* Action Buttons */}
-              <div className="flex justify-end space-x-4 mt-8">
-                <button className="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition duration-200">
-                  Cancelar
-                </button>
-                <button className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
-                  Guardar Cambios
-                </button>
+              <div className="bg-red-50 p-5 rounded-xl shadow-sm">
+                <p className="text-gray-500 font-medium mb-1">Apellido</p>
+                <p className="text-gray-900 font-semibold truncate">{user.lastName}</p>
+              </div>
+              <div className="bg-red-50 p-5 rounded-xl shadow-sm">
+                <p className="text-gray-500 font-medium mb-1">Correo Electrónico</p>
+                <p className="text-gray-900 font-semibold break-words truncate">{user.email}</p>
+              </div>
+              <div className="bg-red-50 p-5 rounded-xl shadow-sm">
+                <p className="text-gray-500 font-medium mb-1">Teléfono</p>
+                <p className="text-gray-900 font-semibold truncate">{user.phone_number || 'No especificado'}</p>
+              </div>
+              <div className="bg-red-50 p-5 rounded-xl shadow-sm">
+                <p className="text-gray-500 font-medium mb-1">Fecha de Nacimiento</p>
+                <p className="text-gray-900 font-semibold truncate">{user.birth_date?.slice(0, 10) || 'No especificada'}</p>
+              </div>
+              <div className="bg-red-50 p-5 rounded-xl shadow-sm">
+                <p className="text-gray-500 font-medium mb-1">Género</p>
+                <p className="text-gray-900 font-semibold capitalize truncate">{user.gender || 'No especificado'}</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 }

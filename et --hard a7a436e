@@ -1,0 +1,237 @@
+[33mcommit a7a436e32cf9189e935127e0f57daa8857aeb5eb[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestt25[m[33m)[m
+Author: AngelisLinares <angelislinares224@gmail.com>
+Date:   Sat Jul 19 13:59:38 2025 -0500
+
+    Frontend cambios en CardProduct,cardSell,sidebarFilter
+
+[33mcommit 28972014d005bdd12182b05120e3c3df3ec59385[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Wed Jul 16 12:25:37 2025 -0500
+
+    refactor(client): ajusta colores en el formulario registro y login
+
+[33mcommit 2b83ddd35f34212c93f240579a0a74b971de8f3f[m
+Merge: 01bd4fc 1904bc7
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Wed Jul 16 11:27:16 2025 -0500
+
+    fix(client): corrige conflictos en el package cliente
+
+[33mcommit 01bd4fc2c194bb869b025f72552151d58e2871d0[m
+Merge: 3029a71 cb86cc9
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Tue Jul 15 09:50:26 2025 -0500
+
+    Merge branch 'feature/api-rest' of https://github.com/Restt015/Jflowg into feature/api-rest
+
+[33mcommit 3029a71ce1f1b1fe26e6bcbb9428f7198d7cef14[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Tue Jul 15 09:49:38 2025 -0500
+
+    refactor(api): implementación de los validadores de usuario
+    
+    implementación de los 'schemas' de validación en formularios de  usuario
+
+[33mcommit 26cf61db175d689483121925b7fe0d7fb1c5ed71[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Mon Jul 14 18:26:19 2025 -0500
+
+    feat(client/api): añade flujo de logueo desde el cliente
+
+[33mcommit 1904bc75cc5f1c476d25fff022022a9652892ae1[m[33m ([m[1;31morigin/Angelis[m[33m, [m[1;32mAngelis[m[33m)[m
+Author: AngelisLinares <angelislinares224@gmail.com>
+Date:   Sun Jul 13 19:18:56 2025 -0500
+
+    "Agrego modal para ver detalles del producto en CardProduct"
+
+[33mcommit 938b8f11883cdf587c229d8b125067d081ce994e[m
+Author: Restt <haloja26@gmail.com>
+Date:   Tue Jul 8 23:49:52 2025 -0500
+
+    Cambios y mejoras en la tienda
+    - Se ha añadido una nueva página de colección.
+    - Se ha añadido una nueva página de artículos.
+    - Se ha añadido un nuevo componente de barra lateral de filtros.
+    - Se ha añadido un nuevo componente de barra de ordenación.
+    - Se ha añadido un nuevo componente de paginación.
+    - Se ha añadido un nuevo componente de cuadrícula de productos.
+    - Se ha añadido un nuevo componente de tarjeta de producto.
+    - Se ha añadido un nuevo componente de tarjeta de venta de productos.
+    - Se ha renombrado el componente de tarjeta de venta de productos.
+
+[33mcommit 29cbb2c0de99ae096bcdfb8fd0008665053f906a[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Fri Jul 4 14:12:42 2025 -0500
+
+    feat(api): añáde esquemas de validación para rutas de usuario
+
+[33mcommit 8e43a06a199a24fd92a6b520f8dc54eb56921da4[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Fri Jul 4 11:44:30 2025 -0500
+
+    test(api): corrige y añade nuevas pruebas para usuarios
+    
+    añade correccinoes en el test de crear nuevo usuario,
+    añade rutas y controladores de sesión
+    añade utilidades para hashear contraseñas
+
+[33mcommit c62215328efef341b878c52d466ea583a255cb20[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Thu Jul 3 13:16:30 2025 -0500
+
+    feat(api): añade controles y rutas de control de sesiones
+    
+    Añaade las dependencias, controles y rutas necesarias para el control
+    de sesiones
+
+[33mcommit d6c5a5e6d66d1c25d8c620570e4f41aec896c4d1[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Wed Jul 2 21:06:39 2025 -0500
+
+    feat(api): Añáde archivos test de usuario y producto
+    
+    Añade archivos de prueba para las rutas de usuarios y de productos
+
+[33mcommit cb86cc9ac6da7b6978da5ca17653f1ef85aa8a4d[m
+Author: ★Yuu☆ <csarjdeveloper@gmail.com>
+Date:   Tue Jul 1 23:42:56 2025 -0500
+
+    refactor(api): Delete server directory
+
+[33mcommit 9ce1885b5ab199c0dfe8de239175eb5689a4c8ef[m
+Merge: 9f4a29d d3029ac
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Tue Jul 1 23:26:40 2025 -0500
+
+    Merge branch 'main' of https://github.com/Restt015/Jflowg into feature/api-rest
+
+[33mcommit 9f4a29db4587983e3a8d7237158ca6b1aa01925b[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Tue Jul 1 23:21:15 2025 -0500
+
+    feat(api): añade las rutas de productos
+    
+    Añade rutas de productos, y corrige bug en controllador de productos
+
+[33mcommit 379441eefbc9f927fbcbb1302ba863dd307fdbc5[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Tue Jul 1 15:15:41 2025 -0500
+
+    refactor(api): actualiza el controlador de usuario
+    
+    Se añade una función de busqueda y mejora la sintaxis
+
+[33mcommit 94c2ce9ccf4e822ce01a9eb37626609db9f52c73[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Tue Jul 1 14:57:22 2025 -0500
+
+    feat(api) Añade el controlador de productos
+
+[33mcommit d3029acf81df761158f83d478cd5a411c7d31a1c[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 8f5adbe 0f0a445
+Author: Restt015 <haloja26@gmail.com>
+Date:   Mon Jun 30 23:36:32 2025 -0500
+
+    Merge pull request #3 from Restt015/Angelis
+    
+    Cambios en la parte del Front end , register,login,forgotpassword/ se…
+
+[33mcommit 69eec8df805a66763bebd64a4a5f18ccb29e5b43[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Mon Jun 30 13:10:06 2025 -0500
+
+    feat(api): añade BD suplementaría, rutas y controladores de servidor
+    
+    Introduce una BD con información de prueba para los endpoints
+    
+    Introduce los endopoints de usuario
+    
+    Introduce los controladores de usuarios (muestrar, mostrar uno, crear, modificar, borrar)
+
+[33mcommit 0f0a4457a2e70ab5974e38ae31a18258b53cf2b3[m
+Author: Angelis Linares <angelislinares224@gmail.com>
+Date:   Sat Jun 28 16:50:05 2025 -0500
+
+    Cambios en la parte del Front end , register,login,forgotpassword/ se añado una nueva libreria para los iconos de facbook y google
+
+[33mcommit 8f5adbef7fe94a7917f50b33aecbe650b5ff8e29[m
+Merge: e0e97a8 82449aa
+Author: Restt015 <haloja26@gmail.com>
+Date:   Thu Jun 26 16:25:53 2025 -0500
+
+    Merge pull request #2 from Restt015/restt25
+    
+    Restt25
+
+[33mcommit 82449aabed39b6aace7c9666b214d58ab0b8d730[m
+Author: Restt <haloja26@gmail.com>
+Date:   Thu Jun 26 16:23:33 2025 -0500
+
+    Cambios en Home Agregado Navbar y Footers
+
+[33mcommit 57efe594953fd79491ac0a6a17c1c2bd293193c5[m
+Author: Restt <haloja26@gmail.com>
+Date:   Thu Jun 26 16:22:59 2025 -0500
+
+    Cambios en Home, Agregado Navbar y Footer
+
+[33mcommit e0e97a8ba8a8a6f6dc509ba243c00db8d4d1779c[m
+Merge: b8bc659 8ffa632
+Author: Restt015 <haloja26@gmail.com>
+Date:   Wed Jun 25 22:38:56 2025 -0500
+
+    Merge pull request #1 from Restt015/restt25
+    
+    Home y componentes
+
+[33mcommit 8ffa632a282bec5b211d098c1797dcfa31139d4b[m[33m ([m[1;32mlog[m[33m)[m
+Author: Show Tunez <haloja26@gmail.com>
+Date:   Wed Jun 25 22:32:52 2025 -0500
+
+    Home y componentes
+
+[33mcommit b8bc65902cfa5aab47a41c6b5fbd4031745dfcc6[m[33m ([m[1;32mmain[m[33m)[m
+Author: CrestInfos <cesar.restrepo@infosgroup.com>
+Date:   Wed Jun 25 14:05:34 2025 -0500
+
+    Organizacion nueva de archivos y carpetas
+
+[33mcommit 8b82bf78acc963b314bce46c3011ca34244edfa5[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Wed Jun 25 12:01:59 2025 -0500
+
+    Actualizaciones en la estructura del frontEnd y backEnd del proyecto
+
+[33mcommit ae2f7f1c36ce282cf7eb1bcf2b495c07472fad2f[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Sat Apr 12 15:09:38 2025 -0500
+
+    Actualización del archivo README.md
+
+[33mcommit b0a0f646fcda692d1bac658f5593fdef80b4d8e7[m
+Author: csarj <csarjdeveloper@gmail.com>
+Date:   Sat Apr 12 15:07:34 2025 -0500
+
+    Actualización del archivo README.md
+
+[33mcommit b3fdd6a8062337a90fff21bd42c6aa90c808ac6d[m
+Author: Restt015 <haloja26@gmail.com>
+Date:   Sat Apr 12 12:22:43 2025 -0500
+
+    Create README.md
+
+[33mcommit 318f4013230f7d28e931bcd89819ea89add9472c[m
+Merge: 1952bf8 9fadb6d
+Author: Restt15 <haloja26@gmail.com>
+Date:   Sat Apr 12 12:08:31 2025 -0500
+
+    Merge branch 'main' of https://github.com/Restt015/Jflowg
+
+[33mcommit 1952bf89d9668e7c179d91683771a1e254c89837[m
+Author: Restt15 <haloja26@gmail.com>
+Date:   Sat Apr 12 12:08:21 2025 -0500
+
+    backend
+
+[33mcommit 9fadb6d72e0c24086f82ac0a59c9db319aab416a[m
+Au

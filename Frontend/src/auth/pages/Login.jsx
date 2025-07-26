@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaGoogle,
   FaFacebook,
@@ -8,32 +8,39 @@ import {
   FaEye,
   FaEyeSlash,
 } from "react-icons/fa";
-import { loginUser } from "../../services/userService"
-import { useNavigate } from 'react-router-dom';
+import { loginUser } from "../../services/userService";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await loginUser({ email, password });
-      sessionStorage.setItem('user', JSON.stringify(res.user))
+
+      // Guardar usuario en sessionStorage o localStorage según "Recordarme"
+      const userData = JSON.stringify(res.user);
+      if (rememberMe) {
+        localStorage.setItem("user", userData);
+      } else {
+        sessionStorage.setItem("user", userData);
+      }
+
       window.location.href = res.redirectTo;
     } catch (err) {
-      alert(err.message);
+      alert(err.message || "Error al iniciar sesión");
     }
-  }
-
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-tr bg-ori from-rose-50 to-white flex flex-col items-center justify-center px-4 py-12 font-orbitron">
       {/* Logo y Bienvenida */}
       <div className="text-center mb-6">
-        <h1 className="text-4xl  text-red-700 mb-1">JFLOWG</h1>
+        <h1 className="text-4xl text-red-700 mb-1">JFLOWG</h1>
         <p className="text-gray-600 text-sm mt-1">Bienvenido de nuevo</p>
       </div>
 
@@ -43,8 +50,9 @@ export default function Login() {
         className="w-full max-w-md bg-white p-6 md:p-8 rounded-2xl shadow-md border border-rose-200"
       >
         <h2 className="text-xl md:text-2xl mb-4 text-[#374151]">Iniciar Sesión</h2>
-        <p className="text-sm text-gray-500 mb-6
-        ">Ingresa tus credenciales para acceder</p>
+        <p className="text-sm text-gray-500 mb-6">
+          Ingresa tus credenciales para acceder
+        </p>
 
         {/* Email */}
         <label htmlFor="email" className="block mb-2 text-[#374151] text-sm">
