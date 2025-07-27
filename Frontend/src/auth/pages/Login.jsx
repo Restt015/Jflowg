@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, } from "react-router-dom";
 import {
   FaGoogle,
   FaFacebook,
@@ -15,14 +15,14 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await loginUser({ email, password });
 
-      // Guardar usuario en sessionStorage o localStorage según "Recordarme"
+      
       const userData = JSON.stringify(res.user);
       if (rememberMe) {
         localStorage.setItem("user", userData);
