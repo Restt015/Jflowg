@@ -6,8 +6,6 @@ export async function registerUser(data) {
     console.log(response.data);
     if (response.status === 201) {
       return response.data;
-      alert("Usuario registrado exitosamente");
-      return response.data
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.data.message) {

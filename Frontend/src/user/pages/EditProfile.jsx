@@ -19,39 +19,23 @@ export default function EditProfile() {
   useEffect(() => {
     const fetchUser = async () => {
       const stored = sessionStorage.getItem("user") || localStorage.getItem("user");
-      console.log(stored);
-
       if (!stored) {
+        alert("No hay sesión iniciada.");
         navigate("/Login");
         return;
       }
-      const res = await getUserProfile()
-      setUser(res)
-    }
-    fetchUser()
+      const res = await getUserProfile();
+      setUser(res);
+      setFormData({
+        name: res.name || '',
+        lastName: res.lastName || '',
+        phone_number: res.phone_number || '',
+        birth_date: res.birth_date?.slice(0, 10) || '',
+        gender: res.gender || ''
+      });
+    };
+    fetchUser();
   }, []);
-
-  const handleChange = (e) => {
-    const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await updateUserProfile(formData);
-      sessionStorage.setItem("user", JSON.stringify(res.user));
-      localStorage.setItem("user", JSON.stringify(res.user));
-      navigate(res.redirectTo);
-    } catch (error) {
-      console.error("Error al actualizar perfil:", error);
-      alert("Error al guardar los cambios");
-    }  
-  
-  const stored = sessionStorage.getItem("user") || localStorage.getItem("user");
-    if (!stored) {
-      alert("No hay sesión iniciada.");
-      navigate("/Login");
-      return;
-    }
-
-    
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,14 +45,9 @@ export default function EditProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      
       const res = await updateUserProfile(formData);
-
       sessionStorage.setItem("user", JSON.stringify(res.user));
       localStorage.setItem("user", JSON.stringify(res.user));
-      const updated = await updateUserProfile(formData);
-      sessionStorage.setItem("user", JSON.stringify(updated));
-      localStorage.setItem("user", JSON.stringify(updated));
       alert("Cambios guardados correctamente");
       navigate(res.redirectTo);
     } catch (error) {
