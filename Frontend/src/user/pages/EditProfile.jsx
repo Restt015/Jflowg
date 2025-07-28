@@ -25,10 +25,7 @@ export default function EditProfile() {
       return;
     }
 
-    const userData = JSON.parse(stored);
-    const data = { id: userData.id || userData._id };
-
-    getUserProfile(data)
+    getUserProfile()
       .then((info) => {
         setUser(info);
         setFormData({
@@ -44,7 +41,7 @@ export default function EditProfile() {
         console.error("Error al cargar datos del perfil:", err);
         alert("Error al cargar datos del perfil");
       });
-  }, []);
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,12 +51,7 @@ export default function EditProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const dataToUpdate = {
-        ...formData,
-        id: user.id || user._id
-      };
-      const updated = await updateUserProfile(dataToUpdate);
-
+      const updated = await updateUserProfile(formData);
       sessionStorage.setItem("user", JSON.stringify(updated));
       localStorage.setItem("user", JSON.stringify(updated));
       alert("Cambios guardados correctamente");
