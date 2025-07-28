@@ -10,24 +10,19 @@ export default function UserProfile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const stored = sessionStorage.getItem("user") || localStorage.getItem("user");
-    if (!stored) {
-      alert("No hay sesión iniciada.");
-      navigate("/Login");
-      return;
+    const fetchUser = async () => {
+      const stored = sessionStorage.getItem("user") || localStorage.getItem("user");
+      console.log(stored);
+      
+      if (!stored) {
+        navigate("/Login");
+        return;
+      }
+      const res = await getUserProfile()
+      setUser(res)
     }
-
-    getUserProfile()
-      .then((profile) => {
-        setUser(profile);
-        sessionStorage.setItem("user", JSON.stringify(profile));
-        localStorage.setItem("user", JSON.stringify(profile));
-      })
-      .catch((err) => {
-        console.error("Error al obtener perfil:", err);
-        alert("No se pudo cargar el perfil.");
-      });
-  }, [navigate]);
+    fetchUser()
+  }, []);
 
   if (!user) return <p className="p-4">Cargando perfil...</p>;
 

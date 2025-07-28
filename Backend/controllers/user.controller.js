@@ -68,7 +68,6 @@ const userController = {
                 name: newUser.name,
                 lastName: newUser.lastName,
                 email: newUser.email,
-                role: newUser.role || 200
             };
             request.session.save();
             reply.code(201).send({ user: request.session.user, redirectTo: '/Home' });
@@ -91,7 +90,6 @@ const userController = {
             name: user.name,
             lastName: user.lastName,
             email: user.email,
-            role: user.role || 2
         };
         request.session.save();
         reply.code(200).send({ user: request.session.user, redirectTo: '/Home' });
@@ -110,15 +108,41 @@ const userController = {
     },
 
     showUserProfile: async (request, reply) => {
-        reply.send({ user: request.session.user });
+        const id = request.params.id;
+        try {
+            const user = await User.findById(id, { password: 0, role: 0, __v: 0 });
+            if (!user) return reply.status(404).send("No se encontraron recursos");
+            return reply.code(200).send(user);
+        } catch (err) {
+            reply.code(404).send('Usuario no encontrado')
+        }
+
     },
 
     updateUserProfile: async (request, reply) => {
         const id = request.params.id;
-        if (!request.body) return reply.code(400).send('Error en el formulario');
-        const user = await User.findByIdAndUpdate(id, request.body, { new: true });
-        if (!user) return reply.code(404).send('No se encontraron recursos');
-        reply.code(200).send(user);
+        try {
+            if (!request.body) return reply.code(400).send('Error en el formulario');
+
+            const allowed = ['name', 'lastName', 'phone_number', 'birth_date', 'gender'];
+            const updates = {};
+            for (let k of allowed) {
+                if (request.body[k] !== undefined) updates[k] = request.body[k];
+            }
+            // console.log(updates);
+            const user = await User.findByIdAndUpdate(id,
+                { $set: updates },
+                { new: true });
+            if (!user) return reply.code(404).send('No se encontraron recursos');
+
+            request.session.user.name = updates.name
+            request.session.user.lastName = updates.lastName
+
+            reply.code(200).send({ user: request.session.user, redirectTo: '/Profile' });
+
+        } catch (err) {
+            reply.code(500).send("No se pudo realizar cambios")
+        }
     },
 
 }
