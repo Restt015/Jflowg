@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Pencil } from 'lucide-react';
 import Navbar from "../../shared/components/navbar";
 import Footer from "../../shared/components/Footer";
-import { getUserProfile } from "../../services/userService";
-import { Pencil } from "lucide-react";
+import { getUserProfile } from '../../services/userService';
 
 export default function UserProfile() {
   const [user, setUser] = useState(null);
@@ -31,6 +31,7 @@ export default function UserProfile() {
       <Navbar />
       <main className="flex-grow max-w-6xl mx-auto px-6 py-28">
         <h1 className="text-4xl font-extrabold text-rose-700 mb-12 text-center font-serif">Perfil del Usuario</h1>
+
         <div className="bg-white shadow-2xl rounded-3xl p-12 flex flex-col md:flex-row gap-12 items-center justify-center">
           <aside className="flex flex-col items-center text-center w-full md:w-1/3">
             <div className="w-36 h-36 bg-rose-500 rounded-full flex items-center justify-center text-white text-5xl font-bold shadow-xl">
@@ -38,6 +39,7 @@ export default function UserProfile() {
             </div>
             <h2 className="mt-6 text-2xl font-bold text-gray-800">{user.name} {user.lastName}</h2>
           </aside>
+
           <div className="flex-1 w-full">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-semibold text-gray-800">Información Personal</h2>
