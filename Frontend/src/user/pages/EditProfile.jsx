@@ -9,7 +9,6 @@ export default function EditProfile() {
   const [formData, setFormData] = useState({
     name: '',
     lastName: '',
-    email: '',
     phone_number: '',
     birth_date: '',
     gender: ''
@@ -18,32 +17,18 @@ export default function EditProfile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const stored = sessionStorage.getItem("user") || localStorage.getItem("user");
-    if (!stored) {
-      alert("No hay sesión iniciada.");
-      navigate("/Login");
-      return;
+    const fetchUser = async () => {
+      const stored = sessionStorage.getItem("user") || localStorage.getItem("user");
+      console.log(stored);
+
+      if (!stored) {
+        navigate("/Login");
+        return;
+      }
+      const res = await getUserProfile()
+      setUser(res)
     }
-
-    const userData = JSON.parse(stored);
-    const data = { id: userData.id || userData._id };
-
-    getUserProfile(data)
-      .then((info) => {
-        setUser(info);
-        setFormData({
-          name: info.name || '',
-          lastName: info.lastName || '',
-          email: info.email || '',
-          phone_number: info.phone_number || '',
-          birth_date: info.birth_date?.slice(0, 10) || '',
-          gender: info.gender || ''
-        });
-      })
-      .catch((err) => {
-        console.error("Error al cargar datos del perfil:", err);
-        alert("Error al cargar datos del perfil");
-      });
+    fetchUser()
   }, []);
 
   const handleChange = (e) => {
@@ -54,16 +39,13 @@ export default function EditProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const dataToUpdate = {
-        ...formData,
-        id: user.id || user._id
-      };
-      const updated = await updateUserProfile(dataToUpdate);
+      
+      const res = await updateUserProfile(formData);
 
-      sessionStorage.setItem("user", JSON.stringify(updated));
-      localStorage.setItem("user", JSON.stringify(updated));
+      sessionStorage.setItem("user", JSON.stringify(res.user));
+      localStorage.setItem("user", JSON.stringify(res.user));
       alert("Cambios guardados correctamente");
-      navigate("/Profile");
+      navigate(res.redirectTo);
     } catch (error) {
       console.error("Error al actualizar perfil:", error);
       alert("Error al guardar los cambios");
@@ -91,7 +73,6 @@ export default function EditProfile() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <input name="name" value={formData.name} onChange={handleChange} placeholder="Nombre" className="p-3 border rounded-xl" required />
                 <input name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Apellido" className="p-3 border rounded-xl" required />
-                <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Correo" className="p-3 border rounded-xl" required />
                 <input name="phone_number" value={formData.phone_number} onChange={handleChange} placeholder="Teléfono" className="p-3 border rounded-xl" />
                 <input name="birth_date" type="date" value={formData.birth_date} onChange={handleChange} className="p-3 border rounded-xl" />
                 <select name="gender" value={formData.gender} onChange={handleChange} className="p-3 border rounded-xl">

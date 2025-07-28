@@ -8,7 +8,6 @@ export async function registerUser(data) {
     });
 
     if (response.status === 201) {
-      alert("Usuario registrado exitosamente");
       return response.data;
     }
   } catch (error) {
@@ -27,7 +26,6 @@ export async function loginUser(data) {
     });
 
     if (response.status === 200) {
-      alert("Inicio de sesión exitoso");
       return response.data;
     }
   } catch (error) {
@@ -39,19 +37,17 @@ export async function loginUser(data) {
 }
 
 
-export async function getUserProfile(data) {
+export async function getUserProfile() {
   try {
-    const userId = data.id || data._id;
-    if (!userId) throw new Error("ID de usuario no proporcionado");
+    const res = JSON.parse(sessionStorage.getItem('user'), 'utf-8'),
+      { id } = res;
 
-    const response = await axios.get(`http://localhost:3001/api/v1/users/${userId}/profile`, {
+    const response = await axios.get(`http://localhost:3001/api/v1/users/${id}/profile`, {
       withCredentials: true
     });
 
     if (response.status === 200) {
       return response.data;
-    } else {
-      throw new Error("No se pudo obtener el perfil");
     }
   } catch (error) {
     console.error("Error al obtener el perfil:", error);
@@ -65,10 +61,9 @@ export async function getUserProfile(data) {
 
 export async function updateUserProfile(data) {
   try {
-    const userId = data.id || data._id;
-    if (!userId) throw new Error("ID de usuario no encontrado para actualizar el perfil.");
-
-    const response = await axios.patch(`http://localhost:3001/api/v1/users/${userId}/profile`, data, {
+    const res = JSON.parse(sessionStorage.getItem('user'), 'utf-8'),
+      { id } = res;
+    const response = await axios.patch(`http://localhost:3001/api/v1/users/${id}/profile`, data, {
       withCredentials: true
     });
 
