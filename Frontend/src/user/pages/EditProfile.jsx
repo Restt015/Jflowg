@@ -30,30 +30,28 @@ export default function EditProfile() {
     }
     fetchUser()
   }, []);
-    const stored = sessionStorage.getItem("user") || localStorage.getItem("user");
+
+  const handleChange = (e) => {
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await updateUserProfile(formData);
+      sessionStorage.setItem("user", JSON.stringify(res.user));
+      localStorage.setItem("user", JSON.stringify(res.user));
+      navigate(res.redirectTo);
+    } catch (error) {
+      console.error("Error al actualizar perfil:", error);
+      alert("Error al guardar los cambios");
+    }  
+  
+  const stored = sessionStorage.getItem("user") || localStorage.getItem("user");
     if (!stored) {
       alert("No hay sesión iniciada.");
       navigate("/Login");
       return;
     }
 
-    getUserProfile()
-      .then((info) => {
-        setUser(info);
-        setFormData({
-          name: info.name || '',
-          lastName: info.lastName || '',
-          email: info.email || '',
-          phone_number: info.phone_number || '',
-          birth_date: info.birth_date?.slice(0, 10) || '',
-          gender: info.gender || ''
-        });
-      })
-      .catch((err) => {
-        console.error("Error al cargar datos del perfil:", err);
-        alert("Error al cargar datos del perfil");
-      });
-  }, [navigate]);
+    
 
   const handleChange = (e) => {
     const { name, value } = e.target;
