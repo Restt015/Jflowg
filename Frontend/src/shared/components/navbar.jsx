@@ -58,7 +58,7 @@ function Navbar() {
           </div>
 
           <div className="hidden md:flex space-x-6 text-base font-medium text-gray-800">
-            <Link to="/Articles" className="hover:text-red-800">Catálogo</Link>
+            <Link to="/Products" className="hover:text-red-800">Catálogo</Link>
             <Link to="#" className="hover:text-red-800">Acerca de Nosotros</Link>
             <Link to="#" className="hover:text-red-800">Blog</Link>
             <Link to="#" className="hover:text-red-800">Contacto</Link>

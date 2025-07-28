@@ -11,7 +11,7 @@ import ForgotPassword from "./auth/pages/ForgotPassword";
 //Shop Pages
 
 import Home from "./shop/pages/Home";
-import Articles from "./shop/pages/Articles";
+import Products from "./shop/pages/Products";
 import Colecction from "./shop/pages/colecction";
 import ProductDetail from "./shop/pages/ProductDetail";
 
@@ -61,9 +61,9 @@ function App() {
 
         <Route path="/" element={<Navigate to="/Home"/>} />  
         <Route path="/Home" element={<Home />} />
-        <Route path="/Articles" element={<Articles />} />
+        <Route path="/Products" element={<Products/>} />
         <Route path="/Colecction" element={<Colecction />} />
-        <Route path="/Articles/:id" element={<ProductDetail />} />
+        <Route path="/Products/:id" element={<ProductDetail />} />
 
         
         

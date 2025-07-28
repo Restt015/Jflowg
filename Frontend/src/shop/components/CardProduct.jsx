@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, Eye, X, ShoppingCart } from "lucide-react";
 import { useCart } from "../../context/CartContext";
+import CartButton from "../../shared/components/CartButton";
+
 
 function CardProduct({
   id,
@@ -16,7 +18,7 @@ function CardProduct({
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const { addToCart } = useCart(); // ✅ acceder al carrito
+  const { addToCart } = useCart();
 
   const handleAddToCart = () => {
     addToCart({
@@ -35,7 +37,7 @@ function CardProduct({
       <div className="bg-pink-100 rounded-2xl shadow-lg transition-transform hover:scale-105 duration-300">
         {/* Imagen con íconos */}
         <div className="relative group h-48 bg-gray-400 rounded-t-2xl overflow-hidden">
-          <Link to={`/Articles/${id}`} className="absolute inset-0 z-0">
+          <Link to={`/Products/${id}`} className="absolute inset-0 z-0">
             <img
               src={image || "https://cataas.com/cat?type=square"}
               alt={title}
@@ -74,7 +76,7 @@ function CardProduct({
 
         {/* Contenido */}
         <div className="bg-white px-6 py-4 rounded-b-2xl flex flex-col gap-2">
-          <Link to={`/Articles/${id}`}>
+          <Link to={`/Products/${id}`}>
             <h3 className="text-lg font-bold text-gray-800 hover:underline">
               {title}
             </h3>
@@ -88,12 +90,12 @@ function CardProduct({
               <p className="text-lg font-bold text-red-600">
                 ${price?.toFixed(2)}
               </p>
-              <button
+              <CartButton
                 onClick={handleAddToCart}
                 className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
               >
                 Agregar
-              </button>
+              </CartButton>
             </div>
           )}
         </div>
@@ -161,7 +163,7 @@ function CardProduct({
                     </div>
                   </div>
 
-                  <button
+                  <CartButton
                     onClick={() => {
                       handleAddToCart();
                       closeModal();
@@ -169,7 +171,7 @@ function CardProduct({
                     className="w-full bg-red-600 text-white py-3 px-6 rounded-lg hover:bg-red-700 transition duration-200 font-medium mt-4"
                   >
                     Agregar al Carrito
-                  </button>
+                  </CartButton>
                 </div>
               </div>
             </div>

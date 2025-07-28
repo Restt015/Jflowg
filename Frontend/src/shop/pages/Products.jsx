@@ -7,12 +7,12 @@ import NavBar from "../../shared/components/navbar";
 import Footer from "../../shared/components/Footer";
 
 
-function Articles() {
+function Products() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const products = [
   { id: "product1", title: "Artículo", description: "Zara", price: 89.99, image: "" },
-  { id: "product2", title: "Artículo", description: "H&M", price: 45.99, image: "" },
+  { id: "product2", title: "Artículo2", description: "H&M", price: 45.99, image: "" },
   { id: "product3", title: "Artículo",  description: "Mango", price: 69.99, image: "" },
   { id: "product4", title: "Falda Floral", description: "Bershka", price: 39.99, image: "" },
   { id: "product5", title: "Blazer Formal", description: "Bershka", price: 99.99, image: "" },
@@ -63,4 +63,4 @@ function Articles() {
   );
 }
 
-export default Articles;
+export default Products;
