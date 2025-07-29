@@ -14,6 +14,8 @@ import Home from "./shop/pages/Home";
 import Products from "./shop/pages/Products";
 import Colecction from "./shop/pages/colecction";
 import ProductDetail from "./shop/pages/ProductDetail";
+import Cart from "./shop/pages/Cart";
+
 
 
 
@@ -64,6 +66,7 @@ function App() {
         <Route path="/Products" element={<Products/>} />
         <Route path="/Colecction" element={<Colecction />} />
         <Route path="/Products/:id" element={<ProductDetail />} />
+        <Route path="/Cart" element={<Cart />} />
 
         
         

@@ -1,22 +1,37 @@
-
 import { useCart } from "../../context/CartContext";
 
-export default function CartButton({ product }) {
+export default function CartButton({ product, variant }) {
   const { addToCart } = useCart();
 
   const handleClick = () => {
-    addToCart({ 
-      product, 
-      size: "M", 
-      quantity: 1 });
+    if (!product || !variant) return;
+
+    const item = {
+      id: variant._id, 
+      product_id: product._id,
+      title: product.name,
+      description: product.description,
+      price: variant.price,
+      size: variant.size,
+      image: variant.images[0],
+      quantity: 1,
+    };
+
+    console.log("Agregando al carrito:", item);
+
+    
+    addToCart(item);
     alert("Producto agregado al carrito");
   };
-
+ 
+   
   return (
-    <button onClick={handleClick} className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200">
+    <button
+      onClick={handleClick}
+      className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200"
+    >
       Agregar
     </button>
+   
   );
 }
-
-

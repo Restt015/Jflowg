@@ -12,7 +12,6 @@ export default function UserProfile() {
   useEffect(() => {
     const fetchUser = async () => {
       const stored = sessionStorage.getItem("user") || localStorage.getItem("user");
-      console.log(stored);
       
       if (!stored) {
         navigate("/Login");
@@ -54,7 +53,7 @@ export default function UserProfile() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6 text-base">
               <div className="bg-red-50 p-5 rounded-xl shadow-sm"><p className="text-gray-500">Nombre</p><p>{user.name}</p></div>
               <div className="bg-red-50 p-5 rounded-xl shadow-sm"><p className="text-gray-500">Apellido</p><p>{user.lastName}</p></div>
-              <div className="bg-red-50 p-5 rounded-xl shadow-sm"><p className="text-gray-500">Correo Electrónico</p><p>{user.email}</p></div>
+              <div className="bg-red-50 p-5 rounded-xl shadow-sm"><p className="text-gray-500">Correo Electrónico</p><p className="w-18 truncate">{user.email}</p></div>
               <div className="bg-red-50 p-5 rounded-xl shadow-sm"><p className="text-gray-500">Teléfono</p><p>{user.phone_number || "No especificado"}</p></div>
               <div className="bg-red-50 p-5 rounded-xl shadow-sm"><p className="text-gray-500">Fecha de Nacimiento</p><p>{user.birth_date?.slice(0, 10) || "No especificada"}</p></div>
               <div className="bg-red-50 p-5 rounded-xl shadow-sm"><p className="text-gray-500">Género</p><p>{user.gender || "No Especificado"}</p></div>

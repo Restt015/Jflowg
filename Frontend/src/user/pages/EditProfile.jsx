@@ -10,7 +10,7 @@ export default function EditProfile() {
     name: '',
     lastName: '',
     phone_number: '',
-    birth_date: '',
+    birth_date: new Date(),
     gender: ''
   });
 
@@ -46,8 +46,7 @@ export default function EditProfile() {
     e.preventDefault();
     try {
       const res = await updateUserProfile(formData);
-      sessionStorage.setItem("user", JSON.stringify(res.user));
-      localStorage.setItem("user", JSON.stringify(res.user));
+      sessionStorage ? sessionStorage.setItem("user", JSON.stringify(res.user)) : localStorage.setItem("user", JSON.stringify(res.user));
       alert("Cambios guardados correctamente");
       navigate(res.redirectTo);
     } catch (error) {
@@ -75,8 +74,8 @@ export default function EditProfile() {
           <section className="flex-1 p-10">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <input name="name" value={formData.name} onChange={handleChange} placeholder="Nombre" className="p-3 border rounded-xl" required />
-                <input name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Apellido" className="p-3 border rounded-xl" required />
+                <input name="name" value={formData.name} onChange={handleChange} placeholder="Nombre" className="p-3 border rounded-xl" />
+                <input name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Apellido" className="p-3 border rounded-xl" />
                 <input name="phone_number" value={formData.phone_number} onChange={handleChange} placeholder="Teléfono" className="p-3 border rounded-xl" />
                 <input name="birth_date" type="date" value={formData.birth_date} onChange={handleChange} className="p-3 border rounded-xl" />
                 <select name="gender" value={formData.gender} onChange={handleChange} className="p-3 border rounded-xl">
