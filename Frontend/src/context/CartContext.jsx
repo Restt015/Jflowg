@@ -54,47 +54,47 @@ export function CartProvider({ children }) {
     }
   };
 
- const increaseQuantity = async (item) => {
-  try {
-    const updatedCart = cart.map((i) => {
-      if (
-        i.product_id === item.product_id &&
-        i.product_variant_id === item.product_variant_id
-      ) {
-        return { ...i, quantity: i.quantity + 1 };
+  const increaseQuantity = async (item) => {
+    try {
+      const itemExist = cart.find((i) => {
+        return (
+          i.product_id._id === item.product_id &&
+          i.product_variant_id._id === item.product_variant_id
+        )
+      });
+
+      if (itemExist) {
+        const updatedItem = { ...item, quantity: item.quantity + 1 };
+        await updateCart({ items: updatedItem });
       }
-      return i;
-    });
 
-    console.log("Actualizando carrito con:", updatedCart);
+      fetchCart();
+    } catch (err) {
+      console.error("Error al aumentar cantidad", err);
+    }
+  };
 
-    await updateCart({ items: updatedCart });
-    fetchCart();
-  } catch (err) {
-    console.error("Error al aumentar cantidad", err);
-  }
-};
+  const decreaseQuantity = async (item) => {
+    try {
+      if (item.quantity <= 1) return;
 
-const decreaseQuantity = async (item) => {
-  try {
-    if (item.quantity <= 1) return;
+      const itemExist = cart.find((i) => {
+        return (
+          i.product_id._id === item.product_id &&
+          i.product_variant_id._id === item.product_variant_id
+        )
+      });
 
-    const updatedCart = cart.map((i) => {
-      if (
-        i.product_id === item.product_id &&
-        i.product_variant_id === item.product_variant_id
-      ) {
-        return { ...i, quantity: i.quantity - 1 };
+      if (itemExist) {
+        const updatedItem = { ...item, quantity: item.quantity - 1 };
+        await updateCart({ items: updatedItem });
       }
-      return i;
-    });
 
-    await updateCart({ items: updatedCart });
-    fetchCart();
-  } catch (err) {
-    console.error("Error al disminuir cantidad", err);
-  }
-};
+      fetchCart();
+    } catch (err) {
+      console.error("Error al disminuir cantidad", err);
+    }
+  };
 
 
 

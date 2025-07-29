@@ -28,15 +28,32 @@ const cartController = {
             newItems = request.body;
         try {
             const { items } = await Cart.findOne({ user_id: id })
-            const newCart = [...newItems.items, ...items];
+            const itemExist = items.find(i => i.product_variant_id.toString() === newItems.items.product_variant_id);
+            
+            if (itemExist) {
+                console.log('ITEM ENCONTRADO!');
+                const updatedItems = items.map(i => i.product_variant_id.toString() === newItems.items.product_variant_id ? newItems.items : i)
 
-            const updatedUserCart = await Cart.findOneAndUpdate({ user_id: id },
-                { $set: { items: newCart } },
-                {
-                    new: true,
-                    runValidators: true
-                })
-            if (!updatedUserCart) return reply.code(404);
+                const updatedUserCart = await Cart.findOneAndUpdate({ user_id: id },
+                    { $set: { items: updatedItems } },
+                    {
+                        new: true,
+                        runValidators: true
+                    })
+                if (!updatedUserCart) return reply.code(404);
+
+            } else {
+                const newCart = [...newItems.items, ...items];
+
+                const updatedUserCart = await Cart.findOneAndUpdate({ user_id: id },
+                    { $set: { items: newCart } },
+                    {
+                        new: true,
+                        runValidators: true
+                    })
+                if (!updatedUserCart) return reply.code(404);
+            }
+
             reply.code(200).send("Se ha actualizado el carrito")
         } catch (err) {
             reply.status(500).send('Error al actializar carrito', err);
