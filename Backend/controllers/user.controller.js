@@ -67,6 +67,7 @@ const userController = {
                 name: newUser.name,
                 lastName: newUser.lastName,
                 email: newUser.email,
+                role: newUser.role
             };
             request.session.save();
             reply.code(201).send({ user: request.session.user, redirectTo: '/Home' });
@@ -83,15 +84,17 @@ const userController = {
         if (!user) return reply.code(401).send('Email o contraseña incorrectos');
         const isPasswordValid = await comparePassword(password, user.password);
         if (!isPasswordValid) return reply.code(401).send('Email o contraseña incorrectos');
+        const redirect = /^1\d{2}$/.test(user.role) ? '/Admin' : '/Home';
         // Iniciar sesión
         request.session.user = {
             id: user._id,
             name: user.name,
             lastName: user.lastName,
             email: user.email,
+            role: user.role
         };
         request.session.save();
-        reply.code(200).send({ user: request.session.user, redirectTo: '/Home' });
+        reply.code(200).send({ user: request.session.user, redirectTo: redirect });
     },
 
     logoutUser: async (request, reply) => {

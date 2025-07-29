@@ -12,7 +12,6 @@ export default function UserProfile() {
   useEffect(() => {
     const fetchUser = async () => {
       const stored = sessionStorage.getItem("user") || localStorage.getItem("user");
-      console.log(stored);
       
       if (!stored) {
         navigate("/Login");

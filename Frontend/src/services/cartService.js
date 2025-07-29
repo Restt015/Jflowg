@@ -1,10 +1,11 @@
 // src/services/cartService.js
 import axios from "axios";
 
+const PORT = import.meta.env.VITE_SERVER_PORT;
 
 export async function getCart() {
   try {
-    const response = await axios.get("http://localhost:3001/api/v1/cart", {
+    const response = await axios.get(`http://localhost:${PORT}/api/v1/cart`, {
       withCredentials: true
     });
     return response.data;
@@ -16,7 +17,7 @@ export async function getCart() {
 
 export async function addToCart(data) {
   try {
-    const response = await axios.patch("http://localhost:3001/api/v1/cart", data, {
+    const response = await axios.patch(`http://localhost:${PORT}/api/v1/cart`, data, {
       withCredentials: true
     });
     return response.data;
@@ -28,7 +29,7 @@ export async function addToCart(data) {
 
 export async function updateCart(data) {
   try {
-    const response = await axios.patch("http://localhost:3001/api/v1/cart", data, {
+    const response = await axios.patch(`http://localhost:${PORT}/api/v1/cart`, data, {
       withCredentials: true
     });
     return response.data;
@@ -40,7 +41,7 @@ export async function updateCart(data) {
 
 export async function removeFromCart(data) {
   try {
-    const response = await axios.delete("http://localhost:3001/api/v1/cart", {
+    const response = await axios.delete(`http://localhost:${PORT}/api/v1/cart`, {
       data,
       withCredentials: true
     });

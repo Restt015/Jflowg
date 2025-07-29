@@ -37,7 +37,7 @@ export default function DialogCart({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  return (
+  return ( 
     <div className="fixed top-20 right-4 w-full max-w-md bg-rose-50 shadow-xl rounded-lg z-50 overflow-y-auto p-6">
       <h2 className="text-xl font-bold mb-4 text-gray-800 flex justify-between items-center">
         Mi Carrito
@@ -47,7 +47,14 @@ export default function DialogCart({ isOpen, onClose }) {
       </h2>
 
       {groupedCart.length === 0 ? (
-        <p className="text-gray-600">Tu carrito está vacío.</p>
+        <>
+          <button
+            className="mb-4 text-sm text-red-600 hover:underline"
+            onClick={onClose} onKeyDown={onClose}
+          >← Continuar comprando</button>
+          <p className="text-gray-600">Tu carrito está vacío.</p>
+        </>
+
       ) : (
         <>
           <ul className="space-y-4">

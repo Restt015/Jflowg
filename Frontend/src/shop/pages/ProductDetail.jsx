@@ -5,6 +5,7 @@ import Footer from "../../shared/components/Footer";
 import CartButton from "../../shared/components/CartButton";
 import { useCart } from "../../context/CartContext";
 import axios from "axios";
+import { getProductById } from "../../services/productService";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -14,16 +15,9 @@ function ProductDetail() {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      try {
-        const res = await axios.get(`http://localhost:3001/api/v1/products/${id}`, {
-          withCredentials: true,
-        });
-        setProduct(res.data.product);
-      } catch (err) {
-        console.error("Error al obtener producto:", err);
-      } finally {
-        setLoading(false);
-      }
+      const res = await getProductById(id);
+      setProduct(res);
+      setLoading(false);
     };
 
     fetchProduct();
