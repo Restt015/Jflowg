@@ -25,9 +25,9 @@ export default function Login() {
       
       const userData = JSON.stringify(res.user);
       if (rememberMe) {
-        localStorage.setItem("user", userData);
-      } else {
         sessionStorage.setItem("user", userData);
+      } else {
+        localStorage.setItem("user", userData);
       }
 
       window.location.href = res.redirectTo;

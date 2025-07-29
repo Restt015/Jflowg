@@ -29,10 +29,10 @@ const profilePatchSchema = {
     body: {
         type: 'object',
         properties: {
-            name: { type: 'string', minLength: 1, maxLength: 25, pattern: "^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$" },
-            lastName: { type: 'string', minLength: 5, maxLength: 50 },
-            phone: { type: 'string', pattern: "^\\+\\d{1,3}\\s?\\d{4,14}$" },
-            birthDate: { type: 'string', format: 'date' },
+            name: { type: 'string', minLength: 0, maxLength: 25, pattern: "^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$" },
+            lastName: { type: 'string', minLength: 0, maxLength: 50 },
+            phone_number: { type: 'string', pattern: "^\\+\\d{1,3}\\s?\\d{4,14}$" },
+            birth_date: { type: 'string', format: 'date' },
             gender: { type: 'string', enum: ['male', 'female', 'other'] },
             address: { type: 'string', minLength: 5, maxLength: 100 },
             postalCode: { type: 'string', pattern: '^\\d{4,5}$' },

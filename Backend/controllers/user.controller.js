@@ -1,4 +1,3 @@
-
 import { ObjectId } from 'mongodb';
 import { Cart } from '../models/cart.model.js';
 import User from '../models/user.model.js';
@@ -123,7 +122,7 @@ const userController = {
         const id = request.params.id;
         try {
             if (!request.body) return reply.code(400).send('Error en el formulario');
-
+            
             const allowed = ['name', 'lastName', 'phone_number', 'birth_date', 'gender'];
             const updates = {};
             for (let k of allowed) {

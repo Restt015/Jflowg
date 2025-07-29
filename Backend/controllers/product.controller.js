@@ -7,7 +7,7 @@ const productController = {
         .populate('sub_category_id')
         .populate('variants');
         if (!products) return reply.status(404).send("No se encontraron recursos");
-        return reply.send({
+        return reply.code(200).send({
             count: products.length,
             products: products
         });
@@ -20,7 +20,7 @@ const productController = {
         .populate('sub_category_id')
         .populate('variants');
         if (!product) return reply.status(404).send("No se encontraron recursos");
-        return reply.send(product);
+        return reply.code(200).send(product);
     },
 
 

@@ -1,9 +1,11 @@
 import axios from "axios";
 
+const PORT = import.meta.env.VITE_SERVER_PORT;
+
 // Registrar usuario
 export async function registerUser(data) {
   try {
-    const response = await axios.post("http://localhost:3001/api/v1/users", data, {
+    const response = await axios.post(`http://localhost:${PORT}/api/v1/users`, data, {
       withCredentials: true
     });
 
@@ -21,7 +23,7 @@ export async function registerUser(data) {
 // Login usuario
 export async function loginUser(data) {
   try {
-    const response = await axios.post("http://localhost:3001/api/v1/users/login", data, {
+    const response = await axios.post(`http://localhost:${PORT}/api/v1/users/login`, data, {
       withCredentials: true
     });
 
@@ -42,7 +44,7 @@ export async function getUserProfile() {
     const res = JSON.parse(sessionStorage.getItem('user'), 'utf-8'),
       { id } = res;
 
-    const response = await axios.get(`http://localhost:3001/api/v1/users/${id}/profile`, {
+    const response = await axios.get(`http://localhost:${PORT}/api/v1/users/${id}/profile`, {
       withCredentials: true
     });
 
@@ -63,7 +65,7 @@ export async function updateUserProfile(data) {
   try {
     const res = JSON.parse(sessionStorage.getItem('user'), 'utf-8'),
       { id } = res;
-    const response = await axios.patch(`http://localhost:3001/api/v1/users/${id}/profile`, data, {
+    const response = await axios.patch(`http://localhost:${PORT}/api/v1/users/${id}/profile`, data, {
       withCredentials: true
     });
 
