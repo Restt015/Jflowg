@@ -1,111 +1,88 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, Eye, X, ShoppingCart } from "lucide-react";
-import { useCart } from "../../context/CartContext";
 import CartButton from "../../shared/components/CartButton";
 
-
 function CardProduct({
-  id,
-  title,
+  _id,
+  name,
   description,
   category,
-  image,
-  price,
+  variants,
   showPrice = false,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const { addToCart } = useCart();
+  const variant = variants?.[0] || {
+    _id: `${_id}-variant`,
+    size: "M",
+    price: 0,
+    images: ["https://cataas.com/cat?type=square"],
+  };
 
-  const handleAddToCart = () => {
-    addToCart({
-      id,
-      title,
-      description,
-      category,
-      image,
-      price,
-    });
+  const image = variant.images?.[0] || "https://cataas.com/cat?type=square";
+
+  const product = {
+    _id,
+    name,
+    description,
+    category,
+    variants,
   };
 
   return (
     <div className="w-full max-w-sm mx-auto">
-      {/* Tarjeta */}
       <div className="bg-pink-100 rounded-2xl shadow-lg transition-transform hover:scale-105 duration-300">
-        {/* Imagen con íconos */}
         <div className="relative group h-48 bg-gray-400 rounded-t-2xl overflow-hidden">
-          <Link to={`/Products/${id}`} className="absolute inset-0 z-0">
+          <Link to={`/Products/${_id}`} className="absolute inset-0 z-0">
             <img
-              src={image || "https://cataas.com/cat?type=square"}
-              alt={title}
+              src={image}
+              alt={name}
               className="w-full h-full object-cover"
             />
           </Link>
 
-          {/* Íconos flotantes */}
           <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-            <button
-              className="icon-btn bg-white hover:bg-gray-100 p-2 rounded-full"
-              onClick={(e) => e.stopPropagation()}
-            >
+            <button className="icon-btn bg-white hover:bg-gray-100 p-2 rounded-full">
               <Heart className="w-4 h-4" />
             </button>
             <button
               className="icon-btn bg-white hover:bg-gray-100 p-2 rounded-full"
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal();
-              }}
+              onClick={openModal}
             >
               <Eye className="w-4 h-4" />
             </button>
-            <button
-              className="icon-btn bg-white hover:bg-gray-100 p-2 rounded-full"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleAddToCart(); 
-              }}
-            >
+            <CartButton product={product} variant={variant}>
               <ShoppingCart className="w-4 h-4" />
-            </button>
+            </CartButton>
           </div>
         </div>
 
-        {/* Contenido */}
         <div className="bg-white px-6 py-4 rounded-b-2xl flex flex-col gap-2">
-          <Link to={`/Products/${id}`}>
+          <Link to={`/Products/${_id}`}>
             <h3 className="text-lg font-bold text-gray-800 hover:underline">
-              {title}
+              {name}
             </h3>
           </Link>
-          <p className="text-sm text-gray-400 pt-4">{description}</p>
+          <p className="text-sm text-gray-400 pt-2">{description}</p>
           <p className="text-sm text-gray-500">{category}</p>
 
-          {/* Precio y botón */}
           {showPrice && (
             <div className="flex items-center justify-between pt-2">
               <p className="text-lg font-bold text-red-600">
-                ${price?.toFixed(2)}
+                ${variant?.price?.toFixed(2)}
               </p>
-              <CartButton
-                onClick={handleAddToCart}
-                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
-              >
-                Agregar
-              </CartButton>
+              <CartButton product={product} variant={variant} />
             </div>
           )}
         </div>
       </div>
 
-      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl max-w-2xl w-full max-h-screen overflow-y-auto">
-            {/* Header */}
             <div className="flex items-center justify-between p-6 border-b">
               <h2 className="text-2xl font-bold text-gray-900">
                 Detalles del Producto
@@ -118,23 +95,20 @@ function CardProduct({
               </button>
             </div>
 
-            {/* Cuerpo del Modal */}
             <div className="p-6">
               <div className="grid md:grid-cols-2 gap-6">
-                {/* Imagen */}
                 <div className="bg-gray-100 rounded-xl p-8 flex items-center justify-center min-h-72">
                   <img
-                    src={image || "https://cataas.com/cat?type=square"}
-                    alt={title}
+                    src={image}
+                    alt={name}
                     className="max-w-full max-h-60 object-contain"
                   />
                 </div>
 
-                {/* Información */}
                 <div className="space-y-4">
-                  <h3 className="text-xl font-bold text-gray-900">{title}</h3>
+                  <h3 className="text-xl font-bold text-gray-900">{name}</h3>
                   <p className="text-red-600 font-semibold text-lg">
-                    ${price?.toFixed(2)}
+                    ${variant?.price?.toFixed(2)}
                   </p>
 
                   <div>
@@ -152,22 +126,9 @@ function CardProduct({
                     <p className="text-gray-600">{category}</p>
                   </div>
 
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      Detalles
-                    </h4>
-                    <div className="text-sm text-gray-600 space-y-1">
-                      <p>Producto de alta calidad</p>
-                      <p>Disponible para envío inmediato</p>
-                      <p>Garantía incluida</p>
-                    </div>
-                  </div>
-
                   <CartButton
-                    onClick={() => {
-                      handleAddToCart();
-                      closeModal();
-                    }}
+                    product={product}
+                    variant={variant}
                     className="w-full bg-red-600 text-white py-3 px-6 rounded-lg hover:bg-red-700 transition duration-200 font-medium mt-4"
                   >
                     Agregar al Carrito

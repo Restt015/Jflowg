@@ -1,46 +1,52 @@
-const STORAGE_KEY = "cart";
+// src/services/cartService.js
+import axios from "axios";
 
-export function getCart() {
-  const stored = sessionStorage.getItem(STORAGE_KEY);
-  return stored ? JSON.parse(stored) : [];
-}
 
-export function addToCart(item) {
-  const cart = getCart();
-  const index = cart.findIndex(p => p.id === item.id && p.size === item.size);
-
-  if (index !== -1) {
-    cart[index].quantity += item.quantity || 1;
-  } else {
-    cart.push({ ...item, quantity: item.quantity || 1 });
+export async function getCart() {
+  try {
+    const response = await axios.get("http://localhost:3001/api/v1/cart", {
+      withCredentials: true
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener el carrito:", error);
+    throw error;
   }
-
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
 }
 
-export function removeFromCart(id) {
-  const updated = getCart().filter(item => item.id !== id);
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+export async function addToCart(data) {
+  try {
+    const response = await axios.patch("http://localhost:3001/api/v1/cart", data, {
+      withCredentials: true
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al agregar producto al carrito:", error);
+    throw error;
+  }
 }
 
-export function increaseQuantity(id) {
-  const updated = getCart().map(item =>
-    item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-  );
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+export async function updateCart(data) {
+  try {
+    const response = await axios.patch("http://localhost:3001/api/v1/cart", data, {
+      withCredentials: true
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al actualizar el carrito:", error);
+    throw error;
+  }
 }
 
-export function decreaseQuantity(id) {
-  const updated = getCart()
-    .map(item =>
-      item.id === id && item.quantity > 1
-        ? { ...item, quantity: item.quantity - 1 }
-        : item
-    )
-    .filter(item => item.quantity > 0);
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-}
-
-export function clearCart() {
-  sessionStorage.removeItem(STORAGE_KEY);
+export async function removeFromCart(data) {
+  try {
+    const response = await axios.delete("http://localhost:3001/api/v1/cart", {
+      data,
+      withCredentials: true
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al eliminar producto del carrito:", error);
+    throw error;
+  }
 }
