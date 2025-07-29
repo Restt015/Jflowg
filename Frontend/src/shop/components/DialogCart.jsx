@@ -1,11 +1,9 @@
 import { useCart } from "../../context/CartContext";
-import { Trash2, Plus, Minus } from "lucide-react";
-import { removeFromCart, increaseQuantity, decreaseQuantity } from "../../services/cartService";
+import { Plus, Minus, Trash2 } from "lucide-react";
 
 export default function DialogCart({ isOpen, onClose }) {
-  const { cart } = useCart();
-
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity || 0), 0);
+  const { cart, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   if (!isOpen) return null;
 
@@ -25,24 +23,37 @@ export default function DialogCart({ isOpen, onClose }) {
           <ul className="space-y-4">
             {cart.map((item, i) => (
               <li key={i} className="bg-white rounded-lg p-4 flex gap-4 items-center shadow">
-                <img src={item.image || "https://cataas.com/cat?type=square"}
-                 alt={item.title} 
-                 className="w-16 h-16 object-cover rounded" />
+                <img
+                  src={item.image || "https://cataas.com/cat?type=square"}
+                  alt={item.title}
+                  className="w-16 h-16 object-cover rounded"
+                />
                 <div className="flex-1">
                   <h3 className="font-semibold text-gray-800">{item.title}</h3>
-                  <p className="text-sm text-gray-500">{item.descripcion} ${item.price}</p>
+                  <p className="text-sm text-gray-500">
+                    Talla: {item.size || "M"} | ${item.price}
+                  </p>
                   <div className="flex items-center gap-2 mt-1">
-                    <button onClick={() => decreaseQuantity(item.id)} className="text-gray-600 hover:text-black">
-                    <Minus size={16} />
-                  </button>
-                  <span className="px-2">{item.quantity}</span>
-                  <button onClick={() => increaseQuantity(item.id)} className="text-gray-600 hover:text-black">
-                  <Plus size={16} />
-                  </button>
+                    <button
+                      onClick={() => decreaseQuantity(item.id)}
+                      className="text-gray-600 hover:text-black"
+                    >
+                      <Minus size={16} />
+                    </button>
+                    <span className="px-2">{item.quantity}</span>
+                    <button
+                      onClick={() => increaseQuantity(item.id)}
+                      className="text-gray-600 hover:text-black"
+                    >
+                      <Plus size={16} />
+                    </button>
                   </div>
                 </div>
-                <button onClick={() => removeFromCart(item.id)} className="text-red-500 hover:text-red-700">
-                <Trash2 size={18} />
+                <button
+                  onClick={() => removeFromCart(item.id)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  <Trash2 size={18} />
                 </button>
               </li>
             ))}
@@ -61,7 +72,10 @@ export default function DialogCart({ isOpen, onClose }) {
               <button className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700">
                 Proceder al pago
               </button>
-              <button onClick={onClose} className="flex-1 border border-black py-2 rounded text-black hover:bg-gray-100">
+              <button
+                onClick={onClose}
+                className="flex-1 border border-black py-2 rounded text-black hover:bg-gray-100"
+              >
                 Ver carrito
               </button>
             </div>

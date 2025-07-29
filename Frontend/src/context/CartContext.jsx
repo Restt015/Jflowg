@@ -1,54 +1,48 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import {
-  getCart as getFromStorage,
-  addToCart as addToStorage,
-  removeFromCart as removeFromStorage,
-  increaseQuantity as increaseInStorage,
-  decreaseQuantity as decreaseInStorage,
-  clearCart as clearStorage
+  getCart,
+  addToCart as addStorage,
+  removeFromCart as removeStorage,
+  increaseQuantity as incStorage,
+  decreaseQuantity as decStorage,
 } from "../services/cartService";
 
 const CartContext = createContext();
+
+export const useCart = () => useContext(CartContext);
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    setCart(getFromStorage());
+    setCart(getCart());
   }, []);
 
   const addToCart = (item) => {
-    addToStorage(item);
-    setCart(getFromStorage());
+    addStorage(item);
+    setCart(getCart());
   };
 
   const removeFromCart = (id) => {
-    removeFromStorage(id);
-    setCart(getFromStorage());
+    removeStorage(id);
+    setCart(getCart());
   };
 
   const increaseQuantity = (id) => {
-    increaseInStorage(id);
-    setCart(getFromStorage());
+    incStorage(id);
+    setCart(getCart());
   };
 
   const decreaseQuantity = (id) => {
-    decreaseInStorage(id);
-    setCart(getFromStorage());
-  };
-
-  const clearCart = () => {
-    clearStorage();
-    setCart([]);
+    decStorage(id);
+    setCart(getCart());
   };
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart }}
+      value={{ cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity }}
     >
       {children}
     </CartContext.Provider>
   );
 }
-
-export const useCart = () => useContext(CartContext);
