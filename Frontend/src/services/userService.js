@@ -13,14 +13,13 @@ export async function registerUser(data) {
       return response.data;
     }
   } catch (error) {
-    if (error.response?.data?.message) {
+    if (error.response && error.response.data && error.response.data.message) {
       throw new Error(error.response.data.message);
     }
-    throw new Error("Error al registrar usuario");
+    throw new Error("Error al registrar usuario", error.response.data.message);
   }
 }
 
-// Login usuario
 export async function loginUser(data) {
   try {
     const response = await axios.post(`http://localhost:${PORT}/api/v1/users/login`, data, {
@@ -31,7 +30,7 @@ export async function loginUser(data) {
       return response.data;
     }
   } catch (error) {
-    if (error.response?.data?.message) {
+    if (error.response && error.response.data && error.response.data.message) {
       throw new Error(error.response.data.message);
     }
     throw new Error("Error al iniciar sesión");

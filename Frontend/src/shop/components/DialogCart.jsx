@@ -1,36 +1,151 @@
-import React from "react";
-import { X, ShoppingCart } from "lucide-react";
-import Button1 from "../../shared/components/Button1";
+import { useCart } from "../../context/CartContext";
+import { Plus, Minus, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-function DialogCart({ isOpen, onClose }) {
+export default function DialogCart({ isOpen, onClose }) {
+  const {
+    cart,
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity
+  } = useCart();
+
+  const navigate = useNavigate();
+
+  const handleViewCart = () => {
+    onClose();
+    navigate("/Cart");
+  };
+
+  const groupedCart = cart.reduce((acc, item) => {
+    const key = `${item.product_id?._id}-${item.product_variant_id?._id}`;
+    const existing = acc.find(i => `${i.product_id?._id}-${i.product_variant_id?._id}` === key);
+
+    if (existing) {
+      existing.quantity += item.quantity;
+    } else {
+      acc.push({ ...item });
+    }
+
+    return acc;
+  }, []);
+
+  const total = groupedCart.reduce(
+    (sum, i) => sum + (i.product_variant_id?.price || 0) * i.quantity,
+    0
+  );
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex justify-end">
-      <div className="w-full sm:w-[90%] md:w-[400px] h-full bg-white shadow-xl p-6 relative overflow-y-auto">
-        <button className="absolute top-4 right-4" onClick={onClose}>
-          <X className="w-6 h-6 text-gray-600" />
-        </button>
+    <div className="fixed top-20 right-4 w-full max-w-md bg-rose-50 shadow-xl rounded-lg z-50 overflow-y-auto p-6">
+      <h2 className="text-xl font-bold mb-4 text-gray-800 flex justify-between items-center">
+        Mi Carrito
+        <span className="text-sm bg-red-100 text-red-600 px-3 py-1 rounded-full">
+          {groupedCart.length} {groupedCart.length === 1 ? "artículo" : "artículos"}
+        </span>
+      </h2>
 
-    
-        <div className="flex items-center gap-2 mb-6">
-          <ShoppingCart className="w-5 h-5" />
-          <h2 className="text-lg font-semibold">Carrito de Compra (0)</h2>
-        </div>
-        <div className="flex flex-col items-center justify-center text-center px-4">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png"
-            alt="Carrito vacío"
-            className="w-52 h-52 mb-8"
-          />
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">
-            carrito está vacío
-          </h3>
-          <Button1>Empieza a comprar</Button1>
-        </div>
-      </div>
+      {groupedCart.length === 0 ? (
+        <p className="text-gray-600">Tu carrito está vacío.</p>
+      ) : (
+        <>
+          <ul className="space-y-4">
+            {groupedCart.map((item, i) => (
+              <li
+                key={i}
+                className="bg-white rounded-lg p-4 flex gap-4 items-center shadow"
+              >
+                <img
+                  src={
+                    item.product_variant_id?.images?.[0] ||
+                    "https://cataas.com/cat?type=square"
+                  }
+                  alt={item.product_id?.name}
+                  className="w-16 h-16 object-cover rounded"
+                />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-800">
+                    {item.product_id?.name}
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    {item.product_id?.description} <br />
+                    Talla: {item.product_variant_id?.size} | $ {item.product_variant_id?.price}
+                  </p>
+                  <div className="flex items-center gap-3 mt-2">
+                    <button
+                      onClick={() =>
+                        decreaseQuantity({
+                          id: item.product_variant_id?._id,
+                          product_id: item.product_id?._id,
+                          product_variant_id: item.product_variant_id?._id,
+                          quantity: item.quantity
+                        })
+                      }
+                      className="p-1 bg-gray-100 rounded hover:bg-gray-200"
+                    >
+                      <Minus size={14} />
+                    </button>
+                    <span className="font-semibold">{item.quantity}</span>
+                    <button
+                      onClick={() =>
+                        increaseQuantity({
+                          id: item.product_variant_id?._id,
+                          product_id: item.product_id?._id,
+                          product_variant_id: item.product_variant_id?._id,
+                          quantity: item.quantity
+                        })
+                      }
+                      className="p-1 bg-gray-100 rounded hover:bg-gray-200"
+                    >
+                      <Plus size={14} />
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  className="text-red-500 hover:text-red-700"
+                  onClick={() =>
+                    removeFromCart({
+                      product_id: item.product_id?._id,
+                      product_variant_id: item.product_variant_id?._id,
+                    })
+                  }
+                >
+                  <Trash2 size={18} />
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-6 bg-white rounded-lg p-4 shadow flex flex-col gap-2">
+            <div className="flex justify-between text-sm text-gray-700">
+              <span>Total Parcial:</span>
+              <span className="font-semibold">${total.toFixed(2)}</span>
+            </div>
+            <p className="text-xs text-gray-500">
+              Impuestos y envío calculados al finalizar la compra
+            </p>
+            <div className="flex gap-2 mt-4">
+              <button className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700">
+                Proceder al pago
+              </button>
+              <button
+                onClick={handleViewCart}
+                className="flex-1 border border-black py-2 rounded text-black hover:bg-gray-100"
+              >
+                Ver carrito
+              </button>
+            </div>
+          </div>
+          <button
+            className="mt-4 text-sm text-red-600 hover:underline"
+            onClick={onClose}
+          >
+            ← Continuar comprando
+          </button>
+        </>
+      )}
     </div>
   );
 }
-
-export default DialogCart;

@@ -19,16 +19,22 @@ export default function EditProfile() {
   useEffect(() => {
     const fetchUser = async () => {
       const stored = sessionStorage.getItem("user") || localStorage.getItem("user");
-      console.log(stored);
-
       if (!stored) {
+        alert("No hay sesión iniciada.");
         navigate("/Login");
         return;
       }
-      const res = await getUserProfile()
-      setUser(res)
-    }
-    fetchUser()
+      const res = await getUserProfile();
+      setUser(res);
+      setFormData({
+        name: res.name || '',
+        lastName: res.lastName || '',
+        phone_number: res.phone_number || '',
+        birth_date: res.birth_date?.slice(0, 10) || '',
+        gender: res.gender || ''
+      });
+    };
+    fetchUser();
   }, []);
 
   const handleChange = (e) => {
@@ -39,11 +45,7 @@ export default function EditProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData);
-
       const res = await updateUserProfile(formData);
-      console.log(sessionStorage);
-
       sessionStorage ? sessionStorage.setItem("user", JSON.stringify(res.user)) : localStorage.setItem("user", JSON.stringify(res.user));
       alert("Cambios guardados correctamente");
       navigate(res.redirectTo);
