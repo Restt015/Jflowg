@@ -5,7 +5,6 @@ import { Pencil, Trash2 } from "lucide-react";
 
 export default function ProductCrud() {
   const [products, setProducts] = useState([]);
-  console.log(products);
 
   const fetchProducts = async () => {
     try {

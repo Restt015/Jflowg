@@ -23,10 +23,7 @@ export default function CreateProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(form);
-      
       await createProduct(form);
-      // alert("Producto creado con éxito");
       navigate("/Product-Crud");
       
     } catch (err) {
