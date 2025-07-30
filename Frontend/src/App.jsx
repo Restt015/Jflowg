@@ -21,12 +21,12 @@ import EditUserProfile from "./user/pages/EditProfile";
 
 // Admin Pages
 import AdminDashboard from "../src/admin/pages/AdminDashboard";
-import CreateUser from "../src/admin/pages/CreateUser";
+import CreateUser from "./admin/pages/GestionUser";
 import GestionDevoucion from "../src/admin/pages/GestionDevoucion";
-import GestionUser from "../src/admin/pages/GestionUser";
-import PanelGestion from "../src/admin/pages/PanelGestion";
+import GestionUser from "./admin/pages/GestionUser";
 import ProductCrud from '../src/admin/pages/ProductCrud';
 import CreateProduct from '../src/admin/pages/CreateProduct';
+import GestionDelivery from "../src/admin/pages/GestionPedidos"
 
 
 function App() {
@@ -62,11 +62,11 @@ function App() {
                 : <Navigate to="/login" replace />
             }
           />
-          <Route
-            path="/Create-User"
+           <Route
+            path="/Gestion-Pedidos"
             element={
               user && user.role === 100
-                ? <CreateUser />
+                ? < GestionDelivery />
                 : <Navigate to="/Login" replace />
             }
           />
@@ -83,15 +83,6 @@ function App() {
   element={
     user && user.role === 100
       ? <GestionUser />
-      : <Navigate to="/Login" replace />
-  }
-/>
-
-<Route
-  path="/Panel-Gestion"
-  element={
-    user && user.role === 100
-      ? <PanelGestion />
       : <Navigate to="/Login" replace />
   }
 />
