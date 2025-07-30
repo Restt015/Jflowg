@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChevronLeft, FileText, Package, Users, BarChart3, Shield } from 'lucide-react';
-
+import { Link } from "react-router-dom";
+ 
 const AdminDashboard = ({ user }) => {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -38,36 +39,36 @@ const AdminDashboard = ({ user }) => {
         <div className="w-64 bg-white border-r border-gray-200 min-h-screen">
           <nav className="p-4">
             <ul className="space-y-2">
-              <li>
+              <Link to="/Dashboard">
                 <div className="bg-red-50 text-red-700 px-3 py-2 rounded-lg flex items-center gap-3">
                   <BarChart3 size={18} />
                   <span className="text-sm font-medium">Panel de Administración</span>
                 </div>
-              </li>
-              <li>
+              </Link>
+              <Link to="/Product-Crud">
                 <button className="w-full text-left text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg flex items-center gap-3 hover:bg-gray-50">
                   <Package size={18} />
                   <span className="text-sm">Gestión de Productos</span>
                 </button>
-              </li>
-              <li>
+              </Link>
+              <Link>
                 <button className="w-full text-left text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg flex items-center gap-3 hover:bg-gray-50">
                   <Users size={18} />
                   <span className="text-sm">Gestión de Pedidos</span>
                 </button>
-              </li>
-              <li>
+              </Link>
+              <Link>
                 <button className="w-full text-left text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg flex items-center gap-3 hover:bg-gray-50">
                   <FileText size={18} />
                   <span className="text-sm">Gestión de Devoluciones</span>
                 </button>
-              </li>
-              <li>
+              </Link>
+              <Link>
                 <button className="w-full text-left text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg flex items-center gap-3 hover:bg-gray-50">
                   <Shield size={18} />
                   <span className="text-sm">Gestión de Usuarios</span>
                 </button>
-              </li>
+              </Link>
             </ul>
           </nav>
         </div>
