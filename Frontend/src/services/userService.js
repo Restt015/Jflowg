@@ -82,3 +82,22 @@ export async function updateUserProfile(data) {
     throw new Error("Error al actualizar el perfil");
   }
 }
+
+// Obtener todos los usuarios registrados (para administradores)
+export async function getAllUsers() {
+  try {
+    const response = await axios.get(`http://localhost:${PORT}/api/v1/users`, {
+      withCredentials: true
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.error("Error al obtener usuarios:", error);
+    if (error.response?.data?.message) {
+      throw new Error(error.response.data.message);
+    }
+    throw new Error("Error al obtener usuarios registrados");
+  }
+}

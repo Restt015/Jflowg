@@ -21,38 +21,36 @@ export function CartProvider({ children }) {
   }, []);
 
   const handleAddToCart = async (item) => {
-    try {
-      const existingItem = cart.find(
-        (i) =>
-          i.product_id === item.product_id &&
-          i.product_variant_id === item.id
+  try {
+    const existingItem = cart.find((i) => {
+      return (
+        i.product_id === item.product_id &&
+        i.product_variant_id === item.product_variant_id
       );
-
-      if (existingItem) {
-        const updatedItem = {
-          product_id: item.product_id,
-          product_variant_id: item.id,
-          quantity: existingItem.quantity + item.quantity,
-        };
-        await updateCart(updatedItem);
-      } else {
-        const cartItem = {
-          items: [
-            {
-              product_id: item.product_id,
-              product_variant_id: item.id,
-              quantity: item.quantity,
-            },
-          ],
-        };
-        await addToCart(cartItem);
-      }
-
-      fetchCart();
-    } catch (err) {
-      console.error("No se pudo agregar al carrito", err);
+    });
+    if (existingItem) {
+      
+      const updatedItem = { ... existingItem.quantity + 1};
+      await updateCart({ items: updatedItem});
+    } else {
+      const cartItem = {
+        items: [
+          {
+            product_id: item.product_id,
+            product_variant_id: item.id,
+            quantity: item.quantity,
+          },
+        ],
+      };
+      await addToCart(cartItem);
     }
-  };
+
+    fetchCart();
+  } catch (err) {
+    console.error("No se pudo agregar al carrito", err);
+  }
+};
+
 
   const increaseQuantity = async (item) => {
     try {
@@ -63,9 +61,10 @@ export function CartProvider({ children }) {
         )
       });
 
-      if (itemExist) {
+      if (!itemExist) return;
+    {
         const updatedItem = { ...item, quantity: item.quantity + 1 };
-        await updateCart({ items: updatedItem });
+        await updateCart({ items: updatedItem});
       }
 
       fetchCart();

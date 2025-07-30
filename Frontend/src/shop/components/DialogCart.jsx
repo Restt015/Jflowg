@@ -54,16 +54,21 @@ export default function DialogCart({ isOpen, onClose }) {
 
       {groupedCart.length === 0 ? (
         <>
-          <button
-            className="mb-4 text-sm text-red-600 hover:underline"
-            onClick={onClose} onKeyDown={onClose}
-          >← Continuar comprando</button>
-          <p className="text-gray-600">Tu carrito está vacío.</p>
+         <div className="flex flex-col items-center text-center py-6">
+  <p className="text-gray-600 text-base mb-2">Tu carrito está vacío.</p>
+  <button
+    className="px-4 py-2 bg-white text-red-600 border border-red-500 rounded hover:bg-red-50 transition"
+    onClick={onClose}
+  >
+    ← Continuar comprando
+  </button>
+</div>
+
         </>
 
       ) : (
         <>
-          <ul className="space-y-4">
+          <ul className="space-y-4 scrollable max-h-96 overflow-y-auto">
             {groupedCart.map((item, i) => (
               <li
                 key={i}
