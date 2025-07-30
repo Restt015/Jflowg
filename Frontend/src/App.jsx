@@ -1,6 +1,6 @@
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { CartProvider } from './context/CartContext'; 
+import { CartProvider } from './context/CartContext';
 
 //Auth Pages
 import Login from './auth/pages/Login';
@@ -26,6 +26,8 @@ import EditUserProfile from "./user/pages/EditProfile";
 
 
 //Admin Pages
+import AdminDashboard from "./admin/pages/AdminDashboard";
+
 
 
 
@@ -40,55 +42,64 @@ import EditUserProfile from "./user/pages/EditProfile";
 function App() {
   return (
     <CartProvider>
-      
-    <Router>
-       
+
+      <Router>
+
         <Routes>
 
-      
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Register" element={<Register />} />
-         <Route path="/Forgot-password" element={<ForgotPassword />} />
+
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/Forgot-password" element={<ForgotPassword />} />
 
 
-      
-
-        {/* Auth Routes */}
 
 
-       
-
-        {/* Shop Routes */}
+          {/* Auth Routes */}
 
 
-        <Route path="/" element={<Navigate to="/Home"/>} />  
-        <Route path="/Home" element={<Home />} />
-        <Route path="/Products" element={<Products/>} />
-        <Route path="/Colecction" element={<Colecction />} />
-        <Route path="/Products/:id" element={<ProductDetail />} />
-        <Route path="/Cart" element={<Cart />} />
-
-        
-        
-        
-
-        {/* User Routes */}
-
-         <Route path="/Profile" element={<Profile/>} />
-        <Route path="/EditProfile" element={<EditUserProfile />} />
-
-        {/* Admin Routes */}
-
-        
-        
-        {/*Links Routes */}
 
 
-      </Routes>
+          {/* Shop Routes */}
 
-    
 
-    </Router>
+          <Route path="/" element={<Navigate to="/Home" />} />
+          <Route path="/Home" element={<Home />} />
+          <Route path="/Products" element={<Products />} />
+          <Route path="/Colecction" element={<Colecction />} />
+          <Route path="/Products/:id" element={<ProductDetail />} />
+          <Route path="/Cart" element={<Cart />} />
+
+
+
+
+
+          {/* User Routes */}
+
+          <Route path="/Profile" element={<Profile />} />
+          <Route path="/EditProfile" element={<EditUserProfile />} />
+
+          {/* Admin Routes */}
+          <Route
+            path="/admin"
+            element={
+              user && user.role === 100
+                ? <AdminDashboard user={user} />
+                : <Navigate to="/Login" replace />
+            }
+          />
+
+
+
+
+          {/*Links Routes */}
+
+
+        </Routes>
+
+
+
+      </Router>
     </CartProvider>
   );
 }

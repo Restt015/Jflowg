@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChevronLeft, FileText, Package, Users, BarChart3, Shield } from 'lucide-react';
 
-const AdminDashboard = () => {
+const AdminDashboard = ({ user }) => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -25,8 +25,8 @@ const AdminDashboard = () => {
                 <span className="text-white text-sm font-bold">A</span>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-900">Administrador</p>
-                <p className="text-xs text-gray-500">admin@sistema.com</p>
+                <p className="text-sm font-medium text-gray-900">{user.name}</p>
+                <p className="text-xs text-gray-500">{user.email}</p>
               </div>
             </div>
           </div>
@@ -76,7 +76,6 @@ const AdminDashboard = () => {
         <div className="flex-1 p-6">
           {/* Stats Cards */}
           <div className="grid grid-cols-4 gap-6 mb-8">
-            {/* Total Productos */}
             <div className="bg-white p-6 rounded-lg border border-gray-200">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium text-gray-600">Total Productos</h3>
@@ -85,8 +84,6 @@ const AdminDashboard = () => {
               <div className="text-2xl font-bold text-gray-900 mb-1">1,247</div>
               <div className="text-xs text-green-600">+5% vs mes anterior</div>
             </div>
-
-            {/* Pedidos Activos */}
             <div className="bg-white p-6 rounded-lg border border-gray-200">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium text-gray-600">Pedidos Activos</h3>
@@ -95,8 +92,6 @@ const AdminDashboard = () => {
               <div className="text-2xl font-bold text-gray-900 mb-1">89</div>
               <div className="text-xs text-green-600">+12% vs mes anterior</div>
             </div>
-
-            {/* Devoluciones */}
             <div className="bg-white p-6 rounded-lg border border-gray-200">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium text-gray-600">Devoluciones</h3>
@@ -105,8 +100,6 @@ const AdminDashboard = () => {
               <div className="text-2xl font-bold text-gray-900 mb-1">23</div>
               <div className="text-xs text-red-600">-8% vs mes anterior</div>
             </div>
-
-            {/* Usuarios Activos */}
             <div className="bg-white p-6 rounded-lg border border-gray-200">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium text-gray-600">Usuarios Activos</h3>
@@ -134,7 +127,6 @@ const AdminDashboard = () => {
                   </div>
                   <span className="text-xs text-gray-400">Hace 5 min</span>
                 </div>
-                
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                     <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
