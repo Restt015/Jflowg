@@ -3,6 +3,7 @@ import { useCart } from "../../context/CartContext";
 import Navbar from "../../shared/components/navbar";
 import Footer from "../../shared/components/Footer";
 import { Trash2, Plus, Minus } from "lucide-react";
+import { checkout } from "../../services/paymentService";
 
 export default function Cart() {
   const {
@@ -16,6 +17,11 @@ export default function Cart() {
     (sum, item) => sum + (item.product_variant_id?.price || 0) * item.quantity,
     0
   );
+
+  const checkoutSession = async () => {
+    const res = await checkout({ items: cart });
+    window.location.href = res;
+  }
 
   return (
     <div className="pt-32 bg-gradient-to-b from-white to-red-100 min-h-screen">
@@ -186,7 +192,7 @@ export default function Cart() {
               </button>
             </div>
 
-            <button className="mt-4 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">
+            <button className="mt-4 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700" onClick={checkoutSession}>
               Proceder al pago
             </button>
 

@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getAllProducts } from "../../services/productService";
 import { Pencil, Trash2 } from "lucide-react";
 import AdminSidebar from "../components/shared/AdminSidebar";
+import { deleteProduct } from "../services/adminServices";
 
 export default function ProductCrud() {
+  const navigate = useNavigate()
   const [products, setProducts] = useState([]);
+
 
   const fetchProducts = async () => {
     try {
@@ -15,6 +18,20 @@ export default function ProductCrud() {
       console.error("Error al obtener productos:", error);
     }
   };
+
+  const handleRedirection = (product) => {
+    navigate('/Products/Update', { state: { product } });
+  };
+
+  const handleDelete = async (product) => {
+    if (!window.confirm('¿Seguro que deseas eliminar este producto y sus variantes?')) return;
+    try {
+      await deleteProduct(product);
+      fetchProducts();
+    } catch (err) {
+      console.error('Error al eliminar producto:', err);
+    }
+  }
 
   useEffect(() => {
     fetchProducts();
@@ -55,62 +72,56 @@ export default function ProductCrud() {
                 const stock = variant.stock || 0;
                 const isActive = stock > 0;
 
-                return (
-                  <tr key={i} className="border-b hover:bg-gray-50">
-                    <td className="flex items-center gap-3 py-3">
-                      <div
-                        className={`w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold ${
-                          product.category === "Ropa"
-                            ? "bg-red-600"
-                            : product.category === "Calzado"
+              return (
+                <tr key={i} className="border-b hover:bg-gray-50">
+                  <td className="flex items-center gap-3 py-3">
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold ${product.category === "Ropa"
+                          ? "bg-red-600"
+                          : product.category === "Calzado"
                             ? "bg-green-600"
                             : "bg-gray-600"
                         }`}
-                      >
-                        {product.category?.slice(0, 1) || "?"}
-                      </div>
-                      <div>
-                        <p className="font-semibold text-gray-800">{product.name}</p>
-                        <p className="text-xs text-gray-500">{product.description}</p>
-                      </div>
-                    </td>
-                    <td>
-                      <span className="bg-gray-200 text-xs px-2 py-1 rounded">
-                        {product.category || "Sin categoría"}
-                      </span>
-                    </td>
-                    <td>${variant.price?.toFixed(2) || "0.00"}</td>
-                    <td>
-                      <span className="text-green-600 font-medium">
-                        {stock} unidades
-                      </span>
-                    </td>
-                    <td>
-                      <span
-                        className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                          isActive
-                            ? "bg-green-100 text-green-600"
-                            : "bg-red-100 text-red-600"
+                    >
+                      {product.variants[0].images[0] ?
+                       <img src={product.variants[0].images[0]} alt={product.variants[0].name} className="rounded-3xl" />
+                       :
+                       "?"
+                      }
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-800">{product.name}</p>
+                      <p className="text-xs text-gray-500">{product.description}</p>
+                    </div>
+                  </td>
+                  <td>
+                    <span className="bg-gray-200 text-xs px-2 py-1 rounded">
+                      {product.sub_category_id.name || "Sin categoría"}
+                    </span>
+                  </td>
+                  <td>${variant.price?.toFixed(2) || "0.00"}</td>
+                  <td>
+                    <span className="text-green-600 font-medium">
+                      {stock} unidades
+                    </span>
+                  </td>
+                  <td>
+                    <span
+                      className={`text-xs font-semibold px-2 py-1 rounded-full ${isActive
+                          ? "bg-green-100 text-green-600"
+                          : "bg-red-100 text-red-600"
                         }`}
-                      >
-                        {isActive ? "Activo" : "Inactivo"}
-                      </span>
-                    </td>
-                    <td className="flex gap-2 items-center">
-                      <button className="text-blue-500 hover:text-blue-700">
-                        <Pencil size={16} />
-                      </button>
-                      <button className="text-red-500 hover:text-red-700">
-                        <Trash2 size={16} />
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-              {products.length === 0 && (
-                <tr>
-                  <td colSpan="6" className="text-center py-4 text-gray-500">
-                    No hay productos disponibles.
+                    >
+                      {isActive ? "Activo" : "Inactivo"}
+                    </span>
+                  </td>
+                  <td className="flex-1 space-x-5">
+                    <button className="p-3 text-blue-500 hover:text-blue-700" onClick={() => handleRedirection(product)}>
+                      <Pencil size={16} />
+                    </button>
+                    <button className="p-3 text-red-500 hover:text-red-700" onClick={() => handleDelete(product)}>
+                      <Trash2 size={16} />
+                    </button>
                   </td>
                 </tr>
               )}

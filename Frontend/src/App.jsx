@@ -27,6 +27,7 @@ import GestionUser from "./admin/pages/GestionUser";
 import ProductCrud from '../src/admin/pages/ProductCrud';
 import CreateProduct from '../src/admin/pages/CreateProduct';
 import GestionDelivery from "../src/admin/pages/GestionPedidos"
+import UpdateProduct from './admin/pages/UpdateProduct';
 
 
 function App() {
@@ -98,6 +99,13 @@ function App() {
    path="/Products/Create"
    element={
     user?.role === 100 ? <CreateProduct /> : <Navigate to="/Login" replace />
+   }
+/>
+
+  <Route 
+   path="/Products/Update"
+   element={
+    user?.role && /^1\d{2}$/.test(user.role) ? <UpdateProduct /> : <Navigate to="/Login" replace />
    }
 />
           {/* Fallback route */}

@@ -10,10 +10,10 @@ export default function CreateProduct() {
   const [form, setForm] = useState({
     name: "",
     description: "",
-    price: "",
-    stock: "",
     category: "",
+    subCategory: "",
     image: "",
+    variants:[]
   });
 
   const handleChange = (e) => {
@@ -25,7 +25,6 @@ export default function CreateProduct() {
     e.preventDefault();
     try {
       await createProduct(form);
-      alert("Producto creado con éxito");
       navigate("/Product-Crud");
       
     } catch (err) {
@@ -73,14 +72,22 @@ export default function CreateProduct() {
                 />
               </div>
               <div className="flex-1">
-                <label className="block text-sm font-medium">Precio</label>
+                <label className="block text-sm font-medium">Categoría</label>
                 <input
-                  type="number"
-                  name="price"
-                  value={form.price}
+                  name="category"
+                  value={form.category}
                   onChange={handleChange}
                   className="w-full border rounded px-3 py-2 mt-1"
-                  required
+                />
+              </div>
+
+              <div className="flex-1">
+                <label className="block text-sm font-medium">Sub Categoría</label>
+                <input
+                  name="subCategory"
+                  value={form.subCategory}
+                  onChange={handleChange}
+                  className="w-full border rounded px-3 py-2 mt-1"
                 />
               </div>
             </div>
@@ -94,28 +101,6 @@ export default function CreateProduct() {
                 className="w-full border rounded px-3 py-2 mt-1"
                 rows="3"
               />
-            </div>
-
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <label className="block text-sm font-medium">Categoría</label>
-                <input
-                  name="category"
-                  value={form.category}
-                  onChange={handleChange}
-                  className="w-full border rounded px-3 py-2 mt-1"
-                />
-              </div>
-              <div className="flex-1">
-                <label className="block text-sm font-medium">Stock total</label>
-                <input
-                  type="number"
-                  name="stock"
-                  value={form.stock}
-                  onChange={handleChange}
-                  className="w-full border rounded px-3 py-2 mt-1"
-                />
-              </div>
             </div>
           </div>
         )}
@@ -135,8 +120,99 @@ export default function CreateProduct() {
 
         {activeTab === "stock" && (
           <div>
-            <p className="text-gray-500 text-sm"></p>
-          
+            <label className="block text-sm font-medium mb-2">Variantes del producto</label>
+            {(form.variants || []).map((variant, idx) => (
+              <div key={idx} className="flex flex-wrap gap-4 mb-2 items-center border-b pb-2">
+                <div>
+                  <label className="block text-xs">Color</label>
+                  <input
+                    type="text"
+                    name="color"
+                    value={variant.color || ''}
+                    onChange={e => {
+                      const newVariants = [...(form.variants || [])];
+                      newVariants[idx] = { ...newVariants[idx], color: e.target.value };
+                      setForm({ ...form, variants: newVariants });
+                    }}
+                    className="border rounded px-2 py-1"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs">Talla</label>
+                  <input
+                    type="text"
+                    name="size"
+                    value={variant.size || ''}
+                    onChange={e => {
+                      const newVariants = [...(form.variants || [])];
+                      newVariants[idx] = { ...newVariants[idx], size: e.target.value };
+                      setForm({ ...form, variants: newVariants });
+                    }}
+                    className="border rounded px-2 py-1"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs">Precio</label>
+                  <input
+                    type="number"
+                    name="price"
+                    value={variant.price || ''}
+                    onChange={e => {
+                      const newVariants = [...(form.variants || [])];
+                      newVariants[idx] = { ...newVariants[idx], price: e.target.value };
+                      setForm({ ...form, variants: newVariants });
+                    }}
+                    className="border rounded px-2 py-1"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs">Stock</label>
+                  <input
+                    type="number"
+                    name="stock"
+                    value={variant.stock || ''}
+                    onChange={e => {
+                      const newVariants = [...(form.variants || [])];
+                      newVariants[idx] = { ...newVariants[idx], stock: e.target.value };
+                      setForm({ ...form, variants: newVariants });
+                    }}
+                    className="border rounded px-2 py-1"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs">Imágenes (separadas por coma)</label>
+                  <input
+                    type="text"
+                    name="images"
+                    value={variant.images ? variant.images.join(', ') : ''}
+                    onChange={e => {
+                      const newVariants = [...(form.variants || [])];
+                      newVariants[idx] = { ...newVariants[idx], images: e.target.value.split(',').map(img => img.trim()) };
+                      setForm({ ...form, variants: newVariants });
+                    }}
+                    className="border rounded px-2 py-1 w-48"
+                  />
+                </div>
+                <button
+                  type="button"
+                  className="ml-2 text-red-500 hover:underline"
+                  onClick={() => {
+                    const newVariants = [...(form.variants || [])];
+                    newVariants.splice(idx, 1);
+                    setForm({ ...form, variants: newVariants });
+                  }}
+                >
+                  Eliminar
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              className="mt-2 px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+              onClick={() => setForm({ ...form, variants: [...(form.variants || []), { color: '', size: '', price: '', stock: '', images: [] }] })}
+            >
+              Agregar variante
+            </button>
           </div>
         )}
         <div className="flex justify-end gap-2 pt-4">
