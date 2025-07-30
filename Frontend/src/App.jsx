@@ -2,6 +2,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'; 
 
+const PORT = import.meta.env.VITE_SERVER_PORT;
+
 //Auth Pages
 import Login from './auth/pages/Login';
 import Register from "./auth/pages/Register";
@@ -74,7 +76,7 @@ function App() {
 
         {/* User Routes */}
 
-         <Route path="/Profile" element={<Profile/>} />
+        <Route path="/Profile" element={<Profile/>} />
         <Route path="/EditProfile" element={<EditUserProfile />} />
 
         {/* Admin Routes */}

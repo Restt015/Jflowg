@@ -17,8 +17,7 @@ export default function CartButton({ product, variant }) {
       quantity: 1,
     };
 
-    console.log("Agregando al carrito:", item);
-
+    console.log ("Adding to cart:", item);
     
     addToCart(item);
     alert("Producto agregado al carrito");
