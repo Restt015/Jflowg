@@ -1,6 +1,7 @@
 import { useCart } from "../../context/CartContext";
 import { Plus, Minus, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { checkout } from "../../services/paymentService";
 
 export default function DialogCart({ isOpen, onClose }) {
   const {
@@ -16,6 +17,11 @@ export default function DialogCart({ isOpen, onClose }) {
     onClose();
     navigate("/Cart");
   };
+
+  const checkoutSession = async () => {
+    const res = await checkout({ items: cart });
+    window.location.href = res;
+  }
 
   const groupedCart = cart.reduce((acc, item) => {
     const key = `${item.product_id?._id}-${item.product_variant_id?._id}`;
@@ -37,7 +43,7 @@ export default function DialogCart({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  return ( 
+  return (
     <div className="fixed top-20 right-4 w-full max-w-md bg-rose-50 shadow-xl rounded-lg z-50 overflow-y-auto p-6">
       <h2 className="text-xl font-bold mb-4 text-gray-800 flex justify-between items-center">
         Mi Carrito
@@ -134,7 +140,7 @@ export default function DialogCart({ isOpen, onClose }) {
               Impuestos y envío calculados al finalizar la compra
             </p>
             <div className="flex gap-2 mt-4">
-              <button className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700">
+              <button className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700" onClick={checkoutSession}>
                 Proceder al pago
               </button>
               <button

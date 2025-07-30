@@ -3,61 +3,68 @@ import { useCart } from "../../context/CartContext";
 import Navbar from "../../shared/components/navbar";
 import Footer from "../../shared/components/Footer";
 import { Trash2 } from "lucide-react";
+import { checkout } from "../../services/paymentService";
 
 export default function Cart() {
   const { cart, removeFromCart } = useCart();
+  console.log({ items: cart });
 
   const total = cart.reduce(
     (sum, item) => sum + (item.product_variant_id?.price || 0) * item.quantity,
     0
   );
 
+  const checkoutSession = async () => {
+    const res = await checkout({ items: cart });
+    window.location.href = res;
+  }
+
   return (
     <div className="pt-32 bg-gradient-to-b from-white to-red-100 min-h-screen">
       <Navbar />
-       <div className="py-4 px-6 flex items-center justify-between">
- 
-  <div className="flex items-center gap-2">
-    <h1 className="text-lg font-bold text-gray-800">JFLOWG</h1>
-  </div>
+      <div className="py-4 px-6 flex items-center justify-between">
 
-  {/* Compra segura */}
-  <div className="flex items-center gap-2 text-sm text-gray-500">
-    
-    <span>Compra Segura</span>
-  </div>
-</div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg font-bold text-gray-800">JFLOWG</h1>
+        </div>
 
+        {/* Compra segura */}
+        <div className="flex items-center gap-2 text-sm text-gray-500">
 
-<div className="px-6 pb-4">
-  <div className="flex items-center justify-center gap-6 text-sm font-medium">
-   
-    <div className="flex items-center gap-2 text-red-600">
-      <div className="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs font-bold">
-        ✓
+          <span>Compra Segura</span>
+        </div>
       </div>
-      <span>Carrito</span>
-    </div>
 
-    <div className="w-6 h-0.5 bg-red-300"></div>
 
-   
-    <div className="flex items-center gap-2 text-red-600">
-      <div className="w-6 h-6 rounded-full border-2 border-red-600 text-red-600 flex items-center justify-center text-xs font-bold">
-        2
+      <div className="px-6 pb-4">
+        <div className="flex items-center justify-center gap-6 text-sm font-medium">
+
+          <div className="flex items-center gap-2 text-red-600">
+            <div className="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs font-bold">
+              ✓
+            </div>
+            <span>Carrito</span>
+          </div>
+
+          <div className="w-6 h-0.5 bg-red-300"></div>
+
+
+          <div className="flex items-center gap-2 text-red-600">
+            <div className="w-6 h-6 rounded-full border-2 border-red-600 text-red-600 flex items-center justify-center text-xs font-bold">
+              2
+            </div>
+            <span>Finalizar Compra</span>
+          </div>
+
+          <div className="w-6 h-0.5 bg-gray-300"></div>
+          <div className="flex items-center gap-2 text-gray-400">
+            <div className="w-6 h-6 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-xs font-bold">
+              3
+            </div>
+            <span>Confirmación</span>
+          </div>
+        </div>
       </div>
-      <span>Finalizar Compra</span>
-    </div>
-
-    <div className="w-6 h-0.5 bg-gray-300"></div>
-    <div className="flex items-center gap-2 text-gray-400">
-      <div className="w-6 h-6 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-xs font-bold">
-        3
-      </div>
-      <span>Confirmación</span>
-    </div>
-  </div>
-</div>
 
 
       <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row gap-6">
@@ -145,7 +152,7 @@ export default function Cart() {
             </button>
           </div>
 
-          <button className="mt-4 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">
+          <button className="mt-4 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700" onClick={checkoutSession}>
             Proceder al pago
           </button>
 

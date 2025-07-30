@@ -1,9 +1,10 @@
 import { ObjectId } from 'mongodb';
 import { Cart } from '../models/cart.model.js';
 import { Order } from '../models/order.model.js';
-//import Stripe from 'stripe';
+import { ProductVariant } from '../models/productVariant.model.js';
+import Stripe from 'stripe';
 
-//const stripe = new Stripe(process.env.STRIPE_SK)
+const stripe = new Stripe(process.env.STRIPE_SK)
 
 const cartController = {
 
@@ -119,6 +120,37 @@ const cartController = {
             user_id: user.id,
             status: 'succeeded'
         });
+        // Obtener el carrito antes de vaciarlo
+        const userCart = await Cart.findOne({ user_id: user.id });
+        if (userCart && userCart.items && userCart.items.length > 0) {
+            // Validar stock suficiente antes de descontar
+            for (const item of userCart.items) {
+                const variant = await ProductVariant.findById(item.product_variant_id);
+                if (!variant) {
+                    return reply.status(404).send(`Variante no encontrada: ${item.product_variant_id}`);
+                }
+                if (variant.stock < item.quantity) {
+                    return reply.status(400).send(`Stock insuficiente para la variante ${variant.sku || variant._id}`);
+                }
+            }
+            // Disminuir el stock de cada variante comprada
+            for (const item of userCart.items) {
+                await ProductVariant.findByIdAndUpdate(
+                    item.product_variant_id,
+                    { $inc: { stock: -item.quantity } },
+                    { new: true }
+                );
+            }
+        }
+        const updatedUserCart = await Cart.findOneAndUpdate(
+            { user_id: user.id },
+            { $set: { items: [] } },
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+        if (!updatedUserCart) return reply.code(404);
         reply.type('text/html').send(`<h2>¡Compra exitosa!</h2><a href="http://localhost:${process.env.CLIENT_PORT}">Volver</a>`);
     },
 

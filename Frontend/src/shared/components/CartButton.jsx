@@ -16,12 +16,7 @@ export default function CartButton({ product, variant }) {
       image: variant.images[0],
       quantity: 1,
     };
-
-    console.log("Agregando al carrito:", item);
-
-    
     addToCart(item);
-    alert("Producto agregado al carrito");
   };
  
    

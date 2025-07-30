@@ -18,7 +18,6 @@ const cartRoutes = async (fastify, options) => {
     });
 
     fastify.post('/api/v1/cart/checkout', {
-       
         handler: cartController.checkout
     });
 
