@@ -84,7 +84,7 @@ const userController = {
         if (!user) return reply.code(401).send('Email o contraseña incorrectos');
         const isPasswordValid = await comparePassword(password, user.password);
         if (!isPasswordValid) return reply.code(401).send('Email o contraseña incorrectos');
-        const redirect = /^1\d{2}$/.test(user.role) ? '/Admin' : '/Home';
+        const redirect = /^1\d{2}$/.test(user.role) ? '/Dashboard' : '/Home';
         // Iniciar sesión
         request.session.user = {
             id: user._id,
