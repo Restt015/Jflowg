@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getAllProducts } from "../../services/productService";
 import { Pencil, Trash2 } from "lucide-react";
+import { deleteProduct } from "../services/adminServices";
 
 export default function ProductCrud() {
+  const navigate = useNavigate()
   const [products, setProducts] = useState([]);
+
 
   const fetchProducts = async () => {
     try {
@@ -14,6 +17,20 @@ export default function ProductCrud() {
       console.error("Error al obtener productos:", error);
     }
   };
+
+  const handleRedirection = (product) => {
+    navigate('/Products/Update', { state: { product } });
+  };
+
+  const handleDelete = async (product) => {
+    if (!window.confirm('¿Seguro que deseas eliminar este producto y sus variantes?')) return;
+    try {
+      await deleteProduct(product);
+      fetchProducts();
+    } catch (err) {
+      console.error('Error al eliminar producto:', err);
+    }
+  }
 
   useEffect(() => {
     fetchProducts();
@@ -95,10 +112,10 @@ export default function ProductCrud() {
                     </span>
                   </td>
                   <td className="flex-1 space-x-5">
-                    <button className="text-blue-500 hover:text-blue-700">
+                    <button className="p-3 text-blue-500 hover:text-blue-700" onClick={() => handleRedirection(product)}>
                       <Pencil size={16} />
                     </button>
-                    <button className="text-red-500 hover:text-red-700">
+                    <button className="p-3 text-red-500 hover:text-red-700" onClick={() => handleDelete(product)}>
                       <Trash2 size={16} />
                     </button>
                   </td>

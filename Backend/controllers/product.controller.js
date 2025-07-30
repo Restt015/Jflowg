@@ -74,18 +74,69 @@ const productController = {
 
     updateProduct: async (request, reply) => {
         const id = request.params.id;
-        if (!request.body) return reply.code(400).send('Error en el formulario');
-        const product = await Product.findByIdAndUpdate(id, request.body, { new: true });
-        if (!product) return reply.code(404).send('No se encontraron recursos');
-        reply.code(200).send(product);
+        const data = request.body;
+
+        if (!data) return reply.code(400).send('Error en el formulario');
+        try {
+            // Actualizar variantes si existen
+            let variantIds = [];
+            if (Array.isArray(data.variants)) {
+                variantIds = [];
+                for (const v of data.variants) {
+                    if (v._id) {
+                        // Actualizar variante existente
+                        await ProductVariant.findByIdAndUpdate(v._id, v, { new: true });
+                        variantIds.push(v._id);
+                    } else {
+                        // Crear nueva variante
+                        const newVariant = await ProductVariant.create(v);
+                        variantIds.push(newVariant._id);
+                    }
+                }
+            }
+            const category = await Category.findOne({ name: data.category });
+
+            if (!category) return reply.code(400).send('Categoría no encontrada');
+
+            let subCategory = await SubCategory.findOne({ slug: data.subCategory }).where('parent_id').equals(category._id);
+
+            if (!subCategory) return reply.code(400).send('Subcategoría no encontrada');
+
+            if (!subCategory.parent_id) {
+                subCategory.parent_id = category._id;
+                await subCategory.save();
+            }
+            // Actualizar el producto principal
+            const product = await Product.findByIdAndUpdate(
+                id,
+                {
+                    name: data.name,
+                    description: data.description,
+                    sub_category_id: subCategory._id,
+                    variants: variantIds.length ? variantIds : undefined
+                },
+                { new: true }
+            );
+
+            if (!product) return reply.code(404).send('No se encontraron recursos');
+            reply.code(200).send('Producto actualizado correctamente');
+        } catch (err) {
+            console.error(err);
+            reply.code(500).send('Error al actualizar producto');
+        }
     },
 
 
     deleteProduct: async (request, reply) => {
         const id = request.params.id;
-        const product = await Product.findByIdAndDelete(id);
+        const product = await Product.findById(id);
         if (!product) return reply.code(404).send('No se encontraron recursos');
-        reply.code(200).send('Producto eliminado');
+
+        if (Array.isArray(product.variants) && product.variants.length > 0) {
+            await ProductVariant.deleteMany({ _id: { $in: product.variants } });
+        }
+        await Product.findByIdAndDelete(id);
+        reply.code(200).send('Producto y variantes eliminados');
     }
 };
 
