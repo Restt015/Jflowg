@@ -81,7 +81,7 @@ function App() {
 
           {/* Admin Routes */}
           <Route
-            path="/admin"
+            path="/AdminDashboard"
             element={
               user && user.role === 100
                 ? <AdminDashboard user={user} />
