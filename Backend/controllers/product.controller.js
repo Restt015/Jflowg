@@ -1,4 +1,17 @@
+import { Category } from '../models/category.model.js';
 import {Product} from '../models/product.model.js';
+import { ProductVariant } from '../models/productVariant.model.js';
+import { SubCategory } from '../models/subCategory.model.js';
+
+
+ // Función para generar SKU
+        function generateSku(name, color, size) {
+            // Tomar primeras 5 letras del nombre, color y 1 de talla, en mayúsculas, sin espacios
+            const nameId = (name.replace(/\s+/g, '').toUpperCase() + 'XXXXX').slice(0, 5);
+            const colorId = (color.replace(/\s+/g, '').toUpperCase() + 'YYYYY').slice(0, 4);
+            const sizeId = (size.replace(/\s+/g, '').toUpperCase() + 'Z').slice(0, 1);
+            return `${nameId}-${colorId}-${sizeId}`;
+        }
 
 const productController = {
 
@@ -25,11 +38,38 @@ const productController = {
 
 
     storeProduct: async (request, reply) => {
-        const { name, price, category, description, image } = request.body;
-        if (!name || !price || !category) return reply.code(400).send('Error en el formulario');
+        const product = request.body;
+        if (!product) return reply.code(400).send('Error en el formulario');
+        console.log(product);
+        
+        console.log(generateSku(product.name, product.variants[0].color, product.variants[0].size));
+        
         try {
-            const newProduct = await Product.create({ name, price, category, description, image });
-            reply.code(201).send(newProduct);
+            const category = await Category.findOne({ name: product.category });
+            console.log(category._id);
+            
+            if (!category) return reply.code(400).send('Categoría no encontrada');
+            
+            let subCategory = await SubCategory.findOne({slug: product.subCategory }).where('parent_id').equals(category._id);
+            console.log(subCategory);
+            if (!subCategory) return reply.code(400).send('Subcategoría no encontrada');
+            // Si la subcategoría no tiene parent_id o es diferente, actualizarlo
+            if (!subCategory.parent_id) {
+                subCategory.parent_id = category._id;
+                await subCategory.save();
+            }
+            const variantsData = (product.variants || []).map(v => ({
+                ...v,
+                sku: generateSku(product.name, v.color, v.size)
+            }));
+            const variants = await ProductVariant.insertMany(variantsData);
+            await Product.create({
+                name: product.name,
+                description: product.description,
+                sub_category_id: subCategory._id,
+                variants: variants.map(variant => variant._id)
+            });
+            reply.code(201).send('Producto creado satisfactoriamente');
         } catch (err) {
             console.error(err);
             reply.code(500).send('Error al crear producto');

@@ -192,7 +192,7 @@ export default function Cart() {
               </button>
             </div>
 
-            <button className="mt-4 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">
+            <button className="mt-4 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700" onClick={checkoutSession}>
               Proceder al pago
             </button>
 

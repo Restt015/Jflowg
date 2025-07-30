@@ -5,6 +5,7 @@ import { Pencil, Trash2 } from "lucide-react";
 
 export default function ProductCrud() {
   const [products, setProducts] = useState([]);
+  console.log(products);
 
   const fetchProducts = async () => {
     try {
@@ -55,15 +56,18 @@ export default function ProductCrud() {
                 <tr key={i} className="border-b hover:bg-gray-50">
                   <td className="flex items-center gap-3 py-3">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold ${
-                        product.category === "Ropa"
+                      className={`w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold ${product.category === "Ropa"
                           ? "bg-red-600"
                           : product.category === "Calzado"
-                          ? "bg-green-600"
-                          : "bg-gray-600"
-                      }`}
+                            ? "bg-green-600"
+                            : "bg-gray-600"
+                        }`}
                     >
-                      {product.category?.slice(0, 1) || "?"}
+                      {product.variants[0].images[0] ?
+                       <img src={product.variants[0].images[0]} alt={product.variants[0].name} className="rounded-3xl" />
+                       :
+                       "?"
+                      }
                     </div>
                     <div>
                       <p className="font-semibold text-gray-800">{product.name}</p>
@@ -72,7 +76,7 @@ export default function ProductCrud() {
                   </td>
                   <td>
                     <span className="bg-gray-200 text-xs px-2 py-1 rounded">
-                      {product.category || "Sin categoría"}
+                      {product.sub_category_id.name || "Sin categoría"}
                     </span>
                   </td>
                   <td>${variant.price?.toFixed(2) || "0.00"}</td>
@@ -83,16 +87,15 @@ export default function ProductCrud() {
                   </td>
                   <td>
                     <span
-                      className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                        isActive
+                      className={`text-xs font-semibold px-2 py-1 rounded-full ${isActive
                           ? "bg-green-100 text-green-600"
                           : "bg-red-100 text-red-600"
-                      }`}
+                        }`}
                     >
                       {isActive ? "Activo" : "Inactivo"}
                     </span>
                   </td>
-                  <td className="flex gap-2 items-center">
+                  <td className="flex-1 space-x-5">
                     <button className="text-blue-500 hover:text-blue-700">
                       <Pencil size={16} />
                     </button>
