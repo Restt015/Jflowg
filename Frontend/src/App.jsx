@@ -21,14 +21,18 @@ import EditUserProfile from "./user/pages/EditProfile";
 
 // Admin Pages
 import AdminDashboard from "../src/admin/pages/AdminDashboard";
-import CreateUser from "../src/admin/pages/CreateUser";
+
 import GestionDevoucion from "../src/admin/pages/GestionDevoucion";
 import GestionUser from "../src/admin/pages/GestionUser";
-import PanelGestion from "../src/admin/pages/PanelGestion";
+import GestionPedidos from "../src/admin/pages/GestionPedidos"
 import ProductCrud from '../src/admin/pages/ProductCrud';
 import CreateProduct from '../src/admin/pages/CreateProduct';
 import UpdateProduct from './admin/pages/UpdateProduct';
-
+import UpdateUser from '../src/admin/pages/UpdateUser';
+import CreateUser from "../src/admin/pages/CreateUser"
+import AboutUs from './about/pages/AboutUs';
+import ContactUs from './about/pages/ContactUs';
+import Blogs from './about/pages/Blogs';
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -37,6 +41,11 @@ function App() {
     <CartProvider>
       <Router>
         <Routes>
+          {/* About Routes */}
+          <Route path='/About' element={<AboutUs />}></Route>
+          <Route path='/Contact' element={<ContactUs />}></Route>
+          <Route path='/Blogs' element={<Blogs />}></Route>
+
           {/* Auth Routes */}
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
@@ -64,59 +73,60 @@ function App() {
             }
           />
           <Route
-            path="/Create-User"
+            path="/Gestion-Devolution"
             element={
               user && user.role === 100
-                ? <CreateUser />
+                ? <GestionDevoucion />
                 : <Navigate to="/Login" replace />
             }
           />
           <Route
-            path="/Gestion-Devolution"
+            path="/Gestion-User"
             element={
               user && user.role === 100
-              ? <GestionDevoucion />
-              : <Navigate to="/Login" replace />
+                ? <GestionUser />
+                : <Navigate to="/Login" replace />
             }
-            />
-            <Route
-  path="/Gestion-User"
-  element={
-    user && user.role === 100
-      ? <GestionUser />
-      : <Navigate to="/Login" replace />
-  }
-/>
+          />
+          <Route
+            path="/Product-Crud"
+            element={
+              user && user.role === 100
+                ? <ProductCrud />
+                : <Navigate to="/Login" replace />
+            }
+          />
+          <Route
+            path="/Products/Create"
+            element={
+              user?.role === 100 ? <CreateProduct /> : <Navigate to="/Login" replace />
+            }
+          />
 
-<Route
-  path="/Panel-Gestion"
-  element={
-    user && user.role === 100
-      ? <PanelGestion />
-      : <Navigate to="/Login" replace />
-  }
-/>
-<Route
-  path="/Product-Crud"
-  element={
-    user && user.role === 100
-    ? <ProductCrud />
-    : <Navigate to ="/Login" replace />
-  }
-  />
-  <Route 
-   path="/Products/Create"
-   element={
-    user?.role === 100 ? <CreateProduct /> : <Navigate to="/Login" replace />
-   }
-/>
-
-  <Route 
-   path="/Products/Update"
-   element={
-    user?.role && /^1\d{2}$/.test(user.role) ? <UpdateProduct /> : <Navigate to="/Login" replace />
-   }
-/>
+          <Route
+            path="/Products/Update"
+            element={
+              user?.role && /^1\d{2}$/.test(user.role) ? <UpdateProduct /> : <Navigate to="/Login" replace />
+            }
+          />
+          <Route
+            path="/Gestion-Pedidos"
+            element={
+              user?.role && /^1\d{2}$/.test(user.role) ? <GestionPedidos /> : <Navigate to="/Login" replace />
+            }
+          />
+          <Route
+            path="/Users/Update"
+            element={
+              user?.role && /^1\d{2}$/.test(user.role) ? <UpdateUser /> : <Navigate to="/Login" replace />
+            }
+          />
+          <Route
+            path="/Users/Create"
+            element={
+              user?.role && /^1\d{2}$/.test(user.role) ? <CreateUser /> : <Navigate to="/Login" replace />
+            }
+          />
           {/* Fallback route */}
           <Route path="*" element={<Navigate to="/Home" replace />} />
         </Routes>

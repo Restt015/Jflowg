@@ -83,7 +83,7 @@ export async function updateUserProfile(data) {
   }
 }
 
-// Obtener todos los usuarios registrados (para administradores)
+
 export async function getAllUsers() {
   try {
     const response = await axios.get(`http://localhost:${PORT}/api/v1/users`, {

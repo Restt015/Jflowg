@@ -79,8 +79,12 @@ export default function ProductCrud() {
                             : "bg-gray-600"
                         }`}
                     >
+                
                       {product.variants[0].images[0] ?
-                       <img src={product.variants[0].images[0]} alt={product.variants[0].name} className="rounded-3xl" />
+                       <img 
+                       src={product.variants[0].images[0]} 
+                       alt={product.variants[0].name} 
+                       className="rounded-3xl" />
                        :
                        "?"
                       }

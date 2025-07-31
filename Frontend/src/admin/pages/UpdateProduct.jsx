@@ -15,7 +15,7 @@ const UpdateProduct = () => {
       variants:[]
     });
 
-    // Cargar datos del producto recibido por navigate state
+    
     useEffect(() => {
       if (location.state && location.state.product) {
         const prod = location.state.product;

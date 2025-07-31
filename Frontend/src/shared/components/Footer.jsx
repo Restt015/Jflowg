@@ -20,7 +20,7 @@ function Footer() {
       <ul className="space-y-1 text-sm">
         <li><a href="#" className="hover:text-white">Dev Team</a></li>
         <li><a href="#" className="hover:text-white">Ayuda</a></li>
-        <li><a href="#" className="hover:text-white">Nosotros</a></li>
+        <li><a href="/About" className="hover:text-white">Nosotros</a></li>
       </ul>
     </div>
     <div className="flex md:justify-end items-start space-x-4 text-rose-900">

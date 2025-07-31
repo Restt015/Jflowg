@@ -73,9 +73,9 @@ function Navbar() {
 
           <div className="hidden md:flex space-x-6 text-base font-medium text-gray-800">
             <Link to="/Products" className="hover:text-red-800">Catálogo</Link>
-            <Link to="#" className="hover:text-red-800">Acerca de Nosotros</Link>
-            <Link to="#" className="hover:text-red-800">Blog</Link>
-            <Link to="#" className="hover:text-red-800">Contacto</Link>
+            <Link to="/About" className="hover:text-red-800" >Acerca de Nosotros</Link>
+            <Link to="/Blogs" className="hover:text-red-800" >Blog</Link>
+            <Link to="/Contact" className="hover:text-red-800" >Contacto</Link>
           </div>
 
           <div className="hidden md:flex items-center gap-6">
@@ -118,9 +118,9 @@ function Navbar() {
         {isOpen && (
           <div className="md:hidden mt-4 px-4 space-y-3 text-gray-800">
             <Link to="/Articles" className="block hover:text-red-800">Catálogo</Link>
-            <Link to="#" className="block hover:text-red-800">Acerca de Nosotros</Link>
-            <Link to="#" className="block hover:text-red-800">Blog</Link>
-            <Link to="#" className="block hover:text-red-800">Contacto</Link>
+            <Link to="/About" className="block hover:text-red-800">Acerca de Nosotros</Link>
+            <Link to="/Blogs" className="block hover:text-red-800">Blog</Link>
+            <Link to="/Contact" className="block hover:text-red-800">Contacto</Link>
 
             <div className="flex justify-center items-center gap-6 mt-4">
               <button className="text-pink-900 hover:text-rose-600">
