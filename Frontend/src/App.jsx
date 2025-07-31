@@ -21,14 +21,15 @@ import EditUserProfile from "./user/pages/EditProfile";
 
 // Admin Pages
 import AdminDashboard from "../src/admin/pages/AdminDashboard";
-import CreateUser from "./admin/pages/GestionUser";
+
 import GestionDevoucion from "../src/admin/pages/GestionDevoucion";
-import GestionUser from "./admin/pages/GestionUser";
+import GestionUser from "../src/admin/pages/GestionUser";
+import GestionPedidos from "../src/admin/pages/GestionPedidos"
 import ProductCrud from '../src/admin/pages/ProductCrud';
 import CreateProduct from '../src/admin/pages/CreateProduct';
-import GestionDelivery from "../src/admin/pages/GestionPedidos"
 import UpdateProduct from './admin/pages/UpdateProduct';
-
+import UpdateUser from '../src/admin/pages/UpdateUser';
+import CreateUser from "../src/admin/pages/CreateUser"
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -61,14 +62,6 @@ function App() {
               user && user.role === 100
                 ? <AdminDashboard user={user} />
                 : <Navigate to="/login" replace />
-            }
-          />
-           <Route
-            path="/Gestion-Pedidos"
-            element={
-              user && user.role === 100
-                ? < GestionDelivery />
-                : <Navigate to="/Login" replace />
             }
           />
           <Route
@@ -108,6 +101,24 @@ function App() {
     user?.role && /^1\d{2}$/.test(user.role) ? <UpdateProduct /> : <Navigate to="/Login" replace />
    }
 />
+<Route 
+   path="/Gestion-Pedidos"
+   element={
+    user?.role && /^1\d{2}$/.test(user.role) ? <GestionPedidos /> : <Navigate to="/Login" replace />
+   }
+/>
+<Route 
+  path="/Users/Update"
+  element={
+    user?.role && /^1\d{2}$/.test(user.role) ? <UpdateUser /> : <Navigate to="/Login" replace />
+  }
+/>
+<Route
+ path="/Users/Create"
+ element={
+   user?.role && /^1\d{2}$/.test(user.role) ? <CreateUser /> : <Navigate to="/Login" replace />
+ }
+ />
           {/* Fallback route */}
           <Route path="*" element={<Navigate to="/Home" replace />} />
         </Routes>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createProduct } from "../../admin/services/adminServices";
-import AdminSidebar from "../components/shared/AdminSidebar";
 
 export default function CreateProduct() {
   const navigate = useNavigate();
@@ -34,7 +33,6 @@ export default function CreateProduct() {
 
   return (
     <div className="max-w-5xl mx-auto py-10 px-4">
-     
       <h2 className="text-2xl font-bold text-center mb-1">Panel de Administración</h2>
       <p className="text-center mb-6 text-gray-500">Gestiona los productos de tu tienda</p>
 

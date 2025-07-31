@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAllProducts } from "../../services/productService";
 import { Pencil, Trash2 } from "lucide-react";
-import AdminSidebar from "../components/shared/AdminSidebar";
 import { deleteProduct } from "../services/adminServices";
 
 export default function ProductCrud() {
@@ -38,39 +37,36 @@ export default function ProductCrud() {
   }, []);
 
   return (
-    <div className="flex">
-      <AdminSidebar />
-
-      <main className="flex-1 p-8 bg-gray-50 min-h-screen">
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800">Gestión de Productos</h1>
-            <p className="text-sm text-gray-500">Administra el catálogo de tu tienda</p>
-          </div>
-          <Link to="/Products/Create">
-            <button className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
-              + Nuevo Producto
-            </button>
-          </Link>
+    <div className="p-8 bg-gray-50 min-h-screen">
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">Gestión de Productos</h1>
+          <p className="text-sm text-gray-500">Administra el catálogo de tu tienda</p>
         </div>
+        <Link to="/Products/Create">
+          <button className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+            + Nuevo Producto
+          </button>
+        </Link>
+      </div>
 
-        <div className="bg-white rounded shadow p-4 overflow-x-auto">
-          <table className="w-full text-sm table-auto">
-            <thead>
-              <tr className="text-left border-b text-gray-600">
-                <th className="py-2">Producto</th>
-                <th className="py-2">Categoría</th>
-                <th className="py-2">Precio</th>
-                <th className="py-2">Stock</th>
-                <th className="py-2">Estado</th>
-                <th className="py-2">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((product, i) => {
-                const variant = product.variants?.[0] || {};
-                const stock = variant.stock || 0;
-                const isActive = stock > 0;
+      <div className="bg-white rounded shadow p-4 overflow-x-auto">
+        <table className="w-full text-sm table-auto">
+          <thead>
+            <tr className="text-left border-b text-gray-600">
+              <th className="py-2">Producto</th>
+              <th className="py-2">Categoría</th>
+              <th className="py-2">Precio</th>
+              <th className="py-2">Stock</th>
+              <th className="py-2">Estado</th>
+              <th className="py-2">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product, i) => {
+              const variant = product.variants?.[0] || {};
+              const stock = variant.stock || 0;
+              const isActive = stock > 0;
 
               return (
                 <tr key={i} className="border-b hover:bg-gray-50">
@@ -83,8 +79,12 @@ export default function ProductCrud() {
                             : "bg-gray-600"
                         }`}
                     >
+                
                       {product.variants[0].images[0] ?
-                       <img src={product.variants[0].images[0]} alt={product.variants[0].name} className="rounded-3xl" />
+                       <img 
+                       src={product.variants[0].images[0]} 
+                       alt={product.variants[0].name} 
+                       className="rounded-3xl" />
                        :
                        "?"
                       }
@@ -124,11 +124,18 @@ export default function ProductCrud() {
                     </button>
                   </td>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </main>
+              );
+            })}
+            {products.length === 0 && (
+              <tr>
+                <td colSpan="6" className="text-center py-4 text-gray-500">
+                  No hay productos disponibles.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
